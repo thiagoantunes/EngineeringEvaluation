@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Util;
+package thiagoantunes.engineeringevaluation.util;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;

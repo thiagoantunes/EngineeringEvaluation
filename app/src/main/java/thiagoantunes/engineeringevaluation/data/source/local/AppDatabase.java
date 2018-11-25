@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data.source.local;
+package thiagoantunes.engineeringevaluation.data.source.local;
 
 
 import androidx.annotation.VisibleForTesting;
@@ -13,10 +13,10 @@ import androidx.annotation.NonNull;
 
 import java.util.concurrent.Executors;
 
-import thiagoantunes.engineeringevaluation.Data.City;
-import thiagoantunes.engineeringevaluation.Data.User;
-import thiagoantunes.engineeringevaluation.Data.UserFts;
-import thiagoantunes.engineeringevaluation.Util.AppExecutors;
+import thiagoantunes.engineeringevaluation.data.City;
+import thiagoantunes.engineeringevaluation.data.User;
+import thiagoantunes.engineeringevaluation.data.UserFts;
+import thiagoantunes.engineeringevaluation.util.AppExecutors;
 
 
 /**

@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Util;
+package thiagoantunes.engineeringevaluation.util;
 
 import android.os.Handler;
 import android.os.Looper;

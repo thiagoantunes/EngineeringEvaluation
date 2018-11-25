@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data.source.local;
+package thiagoantunes.engineeringevaluation.data.source.local;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,14 +13,14 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.runner.AndroidJUnit4;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import thiagoantunes.engineeringevaluation.Data.User;
-import thiagoantunes.engineeringevaluation.Util.LiveDataTestUtil;
+import thiagoantunes.engineeringevaluation.data.User;
+import thiagoantunes.engineeringevaluation.util.LiveDataTestUtil;
 
 
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static thiagoantunes.engineeringevaluation.Data.source.local.TestData.CITIES;
-import static thiagoantunes.engineeringevaluation.Data.source.local.TestData.USERS;
-import static thiagoantunes.engineeringevaluation.Data.source.local.TestData.USER_ENTITY;
+import static thiagoantunes.engineeringevaluation.data.source.TestData.CITIES;
+import static thiagoantunes.engineeringevaluation.data.source.TestData.USERS;
+import static thiagoantunes.engineeringevaluation.data.source.TestData.USER_ENTITY;
 
 import static junit.framework.Assert.assertTrue;
 

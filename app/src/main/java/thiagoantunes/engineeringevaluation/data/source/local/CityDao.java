@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data.source.local;
+package thiagoantunes.engineeringevaluation.data.source.local;
 
 
 import androidx.room.Dao;
@@ -9,7 +9,7 @@ import androidx.room.Query;
 import java.util.List;
 
 
-import thiagoantunes.engineeringevaluation.Data.City;
+import thiagoantunes.engineeringevaluation.data.City;
 
 @Dao
 public interface CityDao {

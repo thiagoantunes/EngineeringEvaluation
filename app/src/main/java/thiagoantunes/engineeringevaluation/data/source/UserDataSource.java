@@ -1,11 +1,11 @@
-package thiagoantunes.engineeringevaluation.Data.source;
+package thiagoantunes.engineeringevaluation.data.source;
 
 import androidx.annotation.NonNull;
 
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
-import thiagoantunes.engineeringevaluation.Data.User;
+import thiagoantunes.engineeringevaluation.data.User;
 
 public interface UserDataSource {
 

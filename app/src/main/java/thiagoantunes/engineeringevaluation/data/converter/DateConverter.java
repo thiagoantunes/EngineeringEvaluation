@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data.converter;
+package thiagoantunes.engineeringevaluation.data.converter;
 
 import androidx.room.TypeConverter;
 import java.util.Date;

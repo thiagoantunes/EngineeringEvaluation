@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data;
+package thiagoantunes.engineeringevaluation.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

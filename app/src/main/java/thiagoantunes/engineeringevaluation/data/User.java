@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data;
+package thiagoantunes.engineeringevaluation.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -14,7 +14,7 @@ import com.google.common.base.Objects;
 import java.util.Date;
 
 
-import thiagoantunes.engineeringevaluation.Data.converter.DateConverter;
+import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
 
 //@Fts4
 @Entity(tableName = "users",

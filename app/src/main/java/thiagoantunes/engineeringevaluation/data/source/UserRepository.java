@@ -1,37 +1,35 @@
-package thiagoantunes.engineeringevaluation.Data.source.local;
-
+package thiagoantunes.engineeringevaluation.data.source;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
-
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
-import thiagoantunes.engineeringevaluation.Data.User;
-import thiagoantunes.engineeringevaluation.Data.source.UserDataSource;
-import thiagoantunes.engineeringevaluation.Util.AppExecutors;
+import thiagoantunes.engineeringevaluation.data.User;
+import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
+import thiagoantunes.engineeringevaluation.util.AppExecutors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class UserLocalDataSource  implements UserDataSource {
+public class UserRepository  implements UserDataSource {
 
-    private static volatile UserLocalDataSource INSTANCE;
+    private static volatile UserRepository INSTANCE;
 
     private final AppDatabase mDatabase;
 
     private AppExecutors mAppExecutors;
 
     // Prevent direct instantiation.
-    private UserLocalDataSource(final AppDatabase database, @NonNull AppExecutors appExecutors) {
+    private UserRepository(final AppDatabase database, @NonNull AppExecutors appExecutors) {
         mAppExecutors = appExecutors;
         mDatabase = database;
     }
 
-    public static UserLocalDataSource getInstance(final AppDatabase database, @NonNull AppExecutors appExecutors) {
+    public static UserRepository getInstance(final AppDatabase database, @NonNull AppExecutors appExecutors) {
         if (INSTANCE == null) {
-            synchronized (UserLocalDataSource.class) {
+            synchronized (UserRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new UserLocalDataSource(database, appExecutors);
+                    INSTANCE = new UserRepository(database, appExecutors);
                 }
             }
         }

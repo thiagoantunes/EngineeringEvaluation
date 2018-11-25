@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data.source.local;
+package thiagoantunes.engineeringevaluation.data.source;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,27 +14,25 @@ import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.LargeTest;
 import androidx.test.runner.AndroidJUnit4;
-import thiagoantunes.engineeringevaluation.Data.User;
-import thiagoantunes.engineeringevaluation.Util.LiveDataTestUtil;
-import thiagoantunes.engineeringevaluation.Util.SingleExecutors;
+import thiagoantunes.engineeringevaluation.data.User;
+import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
+import thiagoantunes.engineeringevaluation.util.LiveDataTestUtil;
+import thiagoantunes.engineeringevaluation.util.SingleExecutors;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static thiagoantunes.engineeringevaluation.Data.source.local.TestData.CITIES;
-import static thiagoantunes.engineeringevaluation.Data.source.local.TestData.USER_ENTITY;
-import static thiagoantunes.engineeringevaluation.Data.source.local.TestData.USER_ENTITY2;
-
+import static org.junit.Assert.*;
+import static thiagoantunes.engineeringevaluation.data.source.TestData.CITIES;
+import static thiagoantunes.engineeringevaluation.data.source.TestData.USER_ENTITY;
+import static thiagoantunes.engineeringevaluation.data.source.TestData.USER_ENTITY2;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class UserLocalDataSourceTest {
+public class UserRepositoryTest {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private UserLocalDataSource mLocalDataSource;
+    private UserRepository mLocalDataSource;
 
     private AppDatabase mDatabase;
 
@@ -47,15 +45,15 @@ public class UserLocalDataSourceTest {
         mDatabase.cityDao().insertAll(CITIES);
 
         // Make sure that we're not keeping a reference to the wrong instance.
-        UserLocalDataSource.clearInstance();
-        mLocalDataSource = UserLocalDataSource.getInstance(mDatabase, new SingleExecutors());
+        UserRepository.clearInstance();
+        mLocalDataSource = UserRepository.getInstance(mDatabase, new SingleExecutors());
 
     }
 
     @After
     public void cleanUp() {
         mDatabase.close();
-        UserLocalDataSource.clearInstance();
+        UserRepository.clearInstance();
     }
 
     @Test

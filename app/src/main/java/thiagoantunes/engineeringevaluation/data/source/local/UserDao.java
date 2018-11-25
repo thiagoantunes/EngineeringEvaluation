@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.Data.source.local;
+package thiagoantunes.engineeringevaluation.data.source.local;
 
 
 import androidx.lifecycle.LiveData;
@@ -6,11 +6,10 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
-import thiagoantunes.engineeringevaluation.Data.User;
+import thiagoantunes.engineeringevaluation.data.User;
 
 @Dao
 public interface UserDao {
