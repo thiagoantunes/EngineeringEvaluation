@@ -76,8 +76,7 @@ public class UserRepositoryTest {
         mLocalDataSource.saveUser(USER_ENTITY);
         mLocalDataSource.saveUser(USER_ENTITY2);
 
-        LiveData<List<User>> users1 = mLocalDataSource.getUsers();
-        List<User> users = LiveDataTestUtil.getValue(mLocalDataSource.getUsers());
+        List<User> users = LiveDataTestUtil.getValue(mDatabase.userDao().loadAllUsers());
 
         assertNotNull(users);
         assertTrue(users.size() >= 2);

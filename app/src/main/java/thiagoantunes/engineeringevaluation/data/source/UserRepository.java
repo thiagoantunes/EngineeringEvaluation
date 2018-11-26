@@ -1,12 +1,11 @@
 package thiagoantunes.engineeringevaluation.data.source;
 
-import android.app.Application;
-
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
 import thiagoantunes.engineeringevaluation.util.AppExecutors;
@@ -21,10 +20,20 @@ public class UserRepository  implements UserDataSource {
 
     private AppExecutors mAppExecutors;
 
+    private MediatorLiveData<List<User>> mObservableUsers;
+
     // Prevent direct instantiation.
     private UserRepository(AppDatabase database, @NonNull AppExecutors appExecutors) {
         mDatabase = database;
         mAppExecutors = appExecutors;
+        mObservableUsers = new MediatorLiveData<>();
+
+        mObservableUsers.addSource(mDatabase.userDao().loadAllUsers(),
+                productEntities -> {
+                    if (mDatabase.getDatabaseCreated().getValue() != null) {
+                        mObservableUsers.postValue(productEntities);
+                    }
+                });
     }
 
     public static UserRepository getInstance(AppDatabase database, @NonNull AppExecutors appExecutors) {
@@ -40,7 +49,7 @@ public class UserRepository  implements UserDataSource {
 
     @Override
     public LiveData<List<User>> getUsers() {
-        return mDatabase.userDao().loadAllUsers();
+        return mObservableUsers;
     }
 
     @Override
