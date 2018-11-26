@@ -28,7 +28,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance;
 
     @VisibleForTesting
-    public static final String DATABASE_NAME = "EngineeringEvaluation.db";
+    public static final String DATABASE_NAME = "EngineeringEvaluation2.db";
 
     public abstract UserDao userDao();
 
@@ -68,6 +68,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                 @Override
                                 public void run() {
                                     database.cityDao().insertAll(City.PopulateData());
+                                    database.userDao().insertAll(User.PopulateData());
                                 }
                             });
 
@@ -77,6 +78,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 })
                 .build();
     }
+
 
     /**
      * Check whether the database already exists and expose it via {@link #getDatabaseCreated()}

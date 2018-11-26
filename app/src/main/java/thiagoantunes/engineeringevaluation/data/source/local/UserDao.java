@@ -24,6 +24,9 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveUser(User user);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<User> users);
+
     @Query("SELECT users.* FROM users JOIN usersFts ON (users.id = usersFts.rowid) "
             + "WHERE usersFts MATCH :query")
     LiveData<List<User>> searchAllUsers(String query);

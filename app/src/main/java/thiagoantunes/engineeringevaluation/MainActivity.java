@@ -5,6 +5,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import thiagoantunes.engineeringevaluation.userlist.UserListFragment;
+
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,9 +17,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupToolbar();
+        setUpFab();
+
+        // Add user list fragment if this is first creation
+        if (savedInstanceState == null) {
+            UserListFragment fragment = new UserListFragment();
+
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, fragment, UserListFragment.TAG).commit();
+        }
+    }
+
+    private void setupToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
+    public void setUpFab(){
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,7 @@
 package thiagoantunes.engineeringevaluation.data.source;
 
+import android.app.Application;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -20,16 +22,16 @@ public class UserRepository  implements UserDataSource {
     private AppExecutors mAppExecutors;
 
     // Prevent direct instantiation.
-    private UserRepository(final AppDatabase database, @NonNull AppExecutors appExecutors) {
-        mAppExecutors = appExecutors;
+    private UserRepository(AppDatabase database, @NonNull AppExecutors appExecutors) {
         mDatabase = database;
+        mAppExecutors = appExecutors;
     }
 
-    public static UserRepository getInstance(final AppDatabase database, @NonNull AppExecutors appExecutors) {
+    public static UserRepository getInstance(AppDatabase database, @NonNull AppExecutors appExecutors) {
         if (INSTANCE == null) {
             synchronized (UserRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new UserRepository(database, appExecutors);
+                    INSTANCE = new UserRepository(database,appExecutors);
                 }
             }
         }

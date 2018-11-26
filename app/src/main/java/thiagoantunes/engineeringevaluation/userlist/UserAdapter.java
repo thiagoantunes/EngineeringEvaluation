@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.users;
+package thiagoantunes.engineeringevaluation.userlist;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.data.User;
-import thiagoantunes.engineeringevaluation.databinding.UseritemBinding;
+import thiagoantunes.engineeringevaluation.databinding.UserItemBinding;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -66,8 +66,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        UseritemBinding binding = DataBindingUtil
-                .inflate(LayoutInflater.from(parent.getContext()), R.layout.useritem,
+        UserItemBinding binding = DataBindingUtil
+                .inflate(LayoutInflater.from(parent.getContext()), R.layout.user_item,
                         parent, false);
         binding.setCallback(mUserClickCallback);
         return new UserViewHolder(binding);
@@ -85,9 +85,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     static class UserViewHolder extends RecyclerView.ViewHolder {
-        final UseritemBinding binding;
+        final UserItemBinding binding;
 
-        public UserViewHolder(UseritemBinding binding) {
+        public UserViewHolder(UserItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

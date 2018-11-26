@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 
 import com.google.common.base.Objects;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
@@ -123,6 +125,14 @@ public final class User {
     @Override
     public String toString() {
         return mName;
+    }
+
+    public static List<User> PopulateData() {
+        return new ArrayList<User>() {{
+            new User(1, "João Silva", "31242412", "Savassi", 1, new Date());
+            new User(2, "José Pereira",  "31412521", "Centro", 2, new Date());
+            new User(3, "Maria Silva",  "4122141421", "Floresta", 1, new Date());
+        }};
     }
 
 }

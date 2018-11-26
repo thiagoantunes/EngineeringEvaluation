@@ -1,4 +1,7 @@
 package thiagoantunes.engineeringevaluation.userlist;
 
-public class UserClickCallback {
+import thiagoantunes.engineeringevaluation.data.User;
+
+public interface UserClickCallback {
+    void onClick(User user);
 }

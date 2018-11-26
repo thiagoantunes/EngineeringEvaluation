@@ -1,4 +1,4 @@
-package thiagoantunes.engineeringevaluation.users;
+package thiagoantunes.engineeringevaluation.userlist;
 
 import android.view.View;
 
