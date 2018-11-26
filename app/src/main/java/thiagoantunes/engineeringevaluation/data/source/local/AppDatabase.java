@@ -5,30 +5,34 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 import androidx.annotation.NonNull;
 
+import java.util.List;
 import java.util.concurrent.Executors;
 
 import thiagoantunes.engineeringevaluation.data.City;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.UserFts;
+import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
 import thiagoantunes.engineeringevaluation.util.AppExecutors;
 
 
 /**
  * The Room Database that contains the Task table.
  */
-@Database(entities = {User.class, UserFts.class, City.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, UserFts.class, City.class}, version = 1)
+@TypeConverters(DateConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase sInstance;
 
     @VisibleForTesting
-    public static final String DATABASE_NAME = "EngineeringEvaluation2.db";
+    public static final String DATABASE_NAME = "app.db";
 
     public abstract UserDao userDao();
 
@@ -61,22 +65,26 @@ public abstract class AppDatabase extends RoomDatabase {
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
                         super.onCreate(db);
                         executors.diskIO().execute(() -> {
+                            // Add a delay to simulate a long-running operation
+                            addDelay();
                             // Generate the data for pre-population
                             AppDatabase database = AppDatabase.getInstance(appContext, executors);
-
-                            Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    database.cityDao().insertAll(City.PopulateData());
-                                    database.userDao().insertAll(User.PopulateData());
-                                }
-                            });
-
+                            insertData(database,City.PopulateData(), User.PopulateData());
                             database.setDatabaseCreated();
                         });
                     }
                 })
                 .build();
+    }
+
+    private static void insertData(final AppDatabase database, final List<City> cities,
+                                   final List<User> users) {
+        database.runInTransaction(() -> {
+            database.cityDao().insertAll(cities);
+            for(User user:users){
+                database.userDao().saveUser(user);
+            }
+        });
     }
 
 
@@ -95,6 +103,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public LiveData<Boolean> getDatabaseCreated() {
         return mIsDatabaseCreated;
+    }
+
+    private static void addDelay() {
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException ignored) {
+        }
     }
 
 }

@@ -128,11 +128,14 @@ public final class User {
     }
 
     public static List<User> PopulateData() {
-        return new ArrayList<User>() {{
-            new User(1, "João Silva", "31242412", "Savassi", 1, new Date());
-            new User(2, "José Pereira",  "31412521", "Centro", 2, new Date());
-            new User(3, "Maria Silva",  "4122141421", "Floresta", 1, new Date());
-        }};
+        User u1 = new User(1, "João Silva", "31242412", "Savassi", 1, new Date());
+        User u2 = new User(2, "José Pereira",  "31412521", "Centro", 2, new Date());
+        User u3 = new User(3, "Maria Silva",  "4122141421", "Floresta", 1, new Date());
+        List<User> list = new ArrayList<>(3);
+        list.add(u1);
+        list.add(u2);
+        list.add(u3);
+        return list;
     }
 
 }

@@ -29,9 +29,9 @@ public class UserRepository  implements UserDataSource {
         mObservableUsers = new MediatorLiveData<>();
 
         mObservableUsers.addSource(mDatabase.userDao().loadAllUsers(),
-                productEntities -> {
+                users -> {
                     if (mDatabase.getDatabaseCreated().getValue() != null) {
-                        mObservableUsers.postValue(productEntities);
+                        mObservableUsers.postValue(users);
                     }
                 });
     }

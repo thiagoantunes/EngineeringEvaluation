@@ -33,11 +33,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
+
                     return mUserList.size();
                 }
 
                 @Override
                 public int getNewListSize() {
+
                     return userList.size();
                 }
 
