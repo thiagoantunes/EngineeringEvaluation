@@ -1,6 +1,8 @@
-package thiagoantunes.engineeringevaluation;
+package thiagoantunes.engineeringevaluation.userslist;
 
 import androidx.fragment.app.Fragment;
+import thiagoantunes.engineeringevaluation.R;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +11,9 @@ import android.view.ViewGroup;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class UsersListFragment extends Fragment {
 
-    public MainActivityFragment() {
+    public UsersListFragment() {
     }
 
     @Override
