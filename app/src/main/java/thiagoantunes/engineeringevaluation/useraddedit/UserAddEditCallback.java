@@ -1,4 +1,5 @@
 package thiagoantunes.engineeringevaluation.useraddedit;
 
-public class UserAddEditCallback {
+interface UserAddEditCallback {
+    void onUserSaved();
 }

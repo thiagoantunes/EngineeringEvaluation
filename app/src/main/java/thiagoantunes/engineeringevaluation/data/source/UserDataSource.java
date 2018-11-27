@@ -5,11 +5,14 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import thiagoantunes.engineeringevaluation.data.City;
 import thiagoantunes.engineeringevaluation.data.User;
 
 public interface UserDataSource {
 
     LiveData<List<User>> getUsers();
+
+    LiveData<List<City>> getCities();
 
     LiveData<User> getUser(@NonNull int userId);
 

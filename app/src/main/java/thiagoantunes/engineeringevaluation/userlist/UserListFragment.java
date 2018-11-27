@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import thiagoantunes.engineeringevaluation.MainActivity;
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.databinding.UserlistFragmentBinding;
@@ -72,7 +73,7 @@ public class UserListFragment extends Fragment {
         public void onClick(User user) {
 
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                //((MainActivity) getActivity()).showUserDetails(user);
+                ((MainActivity) getActivity()).showUserDetails(user);
             }
         }
     };

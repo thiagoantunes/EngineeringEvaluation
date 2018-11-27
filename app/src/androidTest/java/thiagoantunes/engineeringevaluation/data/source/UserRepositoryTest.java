@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
-import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.LargeTest;

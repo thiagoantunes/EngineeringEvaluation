@@ -10,6 +10,7 @@ import androidx.room.TypeConverters;
 import androidx.annotation.NonNull;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -104,6 +105,12 @@ public final class User {
         return mDateOfBirth;
     }
 
+    public boolean isEmpty() {
+        return Strings.isNullOrEmpty(mName) ||
+                Strings.isNullOrEmpty(mPhone) ||
+                Strings.isNullOrEmpty(mNeighborhood);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -131,6 +138,7 @@ public final class User {
         User u1 = new User(1, "João Silva", "31242412", "Savassi", 1, new Date());
         User u2 = new User(2, "José Pereira",  "31412521", "Centro", 2, new Date());
         User u3 = new User(3, "Maria Silva",  "4122141421", "Floresta", 1, new Date());
+
         List<User> list = new ArrayList<>(3);
         list.add(u1);
         list.add(u2);
