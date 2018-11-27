@@ -94,7 +94,7 @@ public class UserAddEditViewModel extends AndroidViewModel {
     void saveUser() {
 
         User user = new User(ThreadLocalRandom.current().nextInt(Integer.MIN_VALUE, Integer.MAX_VALUE ),
-                name.get(), phone.get(), neighborhood.get(), 1, DateConverter.toDate(dateOfBirth.get()));
+                name.get(), phone.get(), neighborhood.get(), "Belo Horizonte", DateConverter.toDate(dateOfBirth.get()));
         if (user.isEmpty()) {
             //mSnackbarText.setValue(R.string.empty_user_message);
             return;

@@ -1,17 +1,12 @@
 package thiagoantunes.engineeringevaluation.useraddedit;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import thiagoantunes.engineeringevaluation.R;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 public class UserAddEditActivity extends AppCompatActivity implements UserAddEditCallback{
 

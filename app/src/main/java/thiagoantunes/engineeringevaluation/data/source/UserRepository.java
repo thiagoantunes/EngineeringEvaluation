@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
-import thiagoantunes.engineeringevaluation.data.City;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
 import thiagoantunes.engineeringevaluation.util.AppExecutors;
@@ -51,11 +50,6 @@ public class UserRepository  implements UserDataSource {
     @Override
     public LiveData<List<User>> getUsers() {
         return mObservableUsers;
-    }
-
-    @Override
-    public LiveData<List<City>> getCities() {
-        return mDatabase.cityDao().loadAllCities();
     }
 
     @Override

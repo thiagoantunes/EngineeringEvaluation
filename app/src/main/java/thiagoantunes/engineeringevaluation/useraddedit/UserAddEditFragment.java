@@ -5,21 +5,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
+import android.widget.Spinner;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -63,6 +59,8 @@ public class UserAddEditFragment extends Fragment {
 
         setupDatePicker();
 
+        setupSpinner();
+
         loadData();
     }
 
@@ -86,26 +84,25 @@ public class UserAddEditFragment extends Fragment {
         });
     }
 
-
-
-
-    static EditText DateEdit;
-
     private void setupDatePicker(){
-        DateEdit = (EditText) getActivity().findViewById(R.id.edit_text_date_of_birth);
-        DateEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        EditText dateOfBirthEditText = getActivity().findViewById(R.id.edit_text_date_of_birth);
+        dateOfBirthEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    showDatePickerDialog(v);
+                    DialogFragment newFragment = new DatePickerFragment();
+                    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
                 }
             }
         });
     }
 
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+    private void setupSpinner(){
+        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_city);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.cities_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     public static class DatePickerFragment extends DialogFragment
@@ -124,7 +121,8 @@ public class UserAddEditFragment extends Fragment {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            DateEdit.setText(day + "/" + (month + 1) + "/" + year);
+            EditText dateOfBirthEditText = getActivity().findViewById(R.id.edit_text_date_of_birth);
+            dateOfBirthEditText.setText(day + "/" + (month + 1) + "/" + year);
         }
     }
 

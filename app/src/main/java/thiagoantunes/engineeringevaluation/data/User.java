@@ -2,9 +2,7 @@ package thiagoantunes.engineeringevaluation.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import androidx.annotation.NonNull;
@@ -12,31 +10,22 @@ import androidx.annotation.NonNull;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
 
 //@Fts4
-@Entity(tableName = "users",
-        foreignKeys = {
-                @ForeignKey(entity = City.class,
-                        parentColumns = "id",
-                        childColumns = "cityId",
-                        onDelete = ForeignKey.CASCADE)},
-        indices = {@Index(value = "cityId")
-        })
+@Entity(tableName = "users")
 public final class User {
 
     @PrimaryKey
     @ColumnInfo(name = "id")
     private final int mId;
 
-
-    @ColumnInfo(name = "cityId")
-    private final int mCityId;
+    @NonNull
+    @ColumnInfo(name = "city")
+    private final String mCity;
 
     @NonNull
     @ColumnInfo(name = "name")
@@ -58,12 +47,12 @@ public final class User {
 
     public User(int mId, @NonNull String mName,
                 @NonNull String mPhone, @NonNull String mNeighborhood,
-                int mCityId, @NonNull Date mDateOfBirth) {
+                String mCity, @NonNull Date mDateOfBirth) {
         this.mId = mId;
         this.mName = mName;
         this.mPhone = mPhone;
         this.mNeighborhood = mNeighborhood;
-        this.mCityId = mCityId;
+        this.mCity = mCity;
         this.mDateOfBirth = mDateOfBirth;
     }
 
@@ -73,7 +62,7 @@ public final class User {
         this.mName = user.getName();
         this.mPhone = user.getPhone();
         this.mNeighborhood = user.getNeighborhood();
-        this.mCityId = user.getCityId();
+        this.mCity = user.getCity();
         this.mDateOfBirth = user.getDateOfBirth();
     }
 
@@ -96,8 +85,8 @@ public final class User {
         return mNeighborhood;
     }
 
-    public int getCityId() {
-        return mCityId;
+    public String getCity() {
+        return mCity;
     }
 
     @NonNull
@@ -120,7 +109,7 @@ public final class User {
                 Objects.equal(mName, user.mName) &&
                 Objects.equal(mPhone, user.mPhone) &&
                 Objects.equal(mNeighborhood, user.mNeighborhood) &&
-                Objects.equal(mCityId, user.mCityId) &&
+                Objects.equal(mCity, user.mCity) &&
                 Objects.equal(mDateOfBirth, user.mDateOfBirth);
     }
 
@@ -131,19 +120,7 @@ public final class User {
 
     @Override
     public String toString() {
-        return mName;
-    }
-
-    public static List<User> PopulateData() {
-        User u1 = new User(1, "João Silva", "31242412", "Savassi", 1, new Date());
-        User u2 = new User(2, "José Pereira",  "31412521", "Centro", 2, new Date());
-        User u3 = new User(3, "Maria Silva",  "4122141421", "Floresta", 1, new Date());
-
-        List<User> list = new ArrayList<>(3);
-        list.add(u1);
-        list.add(u2);
-        list.add(u3);
-        return list;
+        return "Name: " + mName;
     }
 
 }

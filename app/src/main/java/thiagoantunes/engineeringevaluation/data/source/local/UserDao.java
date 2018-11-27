@@ -9,7 +9,6 @@ import androidx.room.Query;
 
 import java.util.List;
 
-import thiagoantunes.engineeringevaluation.data.City;
 import thiagoantunes.engineeringevaluation.data.User;
 
 @Dao

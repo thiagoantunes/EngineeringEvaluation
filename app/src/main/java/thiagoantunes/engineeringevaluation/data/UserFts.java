@@ -14,9 +14,18 @@ public class UserFts {
     @ColumnInfo(name = "phone")
     private String mPhone;
 
-    public UserFts(String mName,  String mPhone) {
+    @ColumnInfo(name = "neighborhood")
+    private String mNeighborhood;
+
+    @ColumnInfo(name = "city")
+    private String mCity;
+
+    public UserFts(String mName,  String mPhone, String mNeighborhood, String mCity) {
         this.mName = mName;
         this.mPhone = mPhone;
+        this.mNeighborhood = mNeighborhood;
+        this.mCity = mCity;
+
     }
 
     public String getName() {
@@ -25,5 +34,11 @@ public class UserFts {
 
     public String getPhone() {
         return mPhone;
+    }
+
+    public String getNeighborhood() { return mNeighborhood; }
+
+    public String getCity() {
+        return mCity;
     }
 }

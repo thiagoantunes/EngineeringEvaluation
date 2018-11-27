@@ -57,7 +57,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                             && Objects.equals(newUser.getName(), oldUser.getName())
                             && Objects.equals(newUser.getPhone(), oldUser.getPhone())
                             && Objects.equals(newUser.getNeighborhood(), oldUser.getNeighborhood())
-                            && newUser.getCityId() == oldUser.getCityId()
+                            && Objects.equals(newUser.getCity(), oldUser.getCity())
                             && newUser.getDateOfBirth() == oldUser.getDateOfBirth();
                 }
             });

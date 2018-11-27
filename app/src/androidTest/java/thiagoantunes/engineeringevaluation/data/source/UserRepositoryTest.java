@@ -20,7 +20,6 @@ import thiagoantunes.engineeringevaluation.util.SingleExecutors;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static thiagoantunes.engineeringevaluation.data.source.TestData.CITIES;
 import static thiagoantunes.engineeringevaluation.data.source.TestData.USER_ENTITY;
 import static thiagoantunes.engineeringevaluation.data.source.TestData.USER_ENTITY2;
 
@@ -41,7 +40,6 @@ public class UserRepositoryTest {
         mDatabase = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getContext(),
                 AppDatabase.class)
                 .build();
-        mDatabase.cityDao().insertAll(CITIES);
 
         // Make sure that we're not keeping a reference to the wrong instance.
         UserRepository.clearInstance();

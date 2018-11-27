@@ -18,7 +18,6 @@ import thiagoantunes.engineeringevaluation.util.LiveDataTestUtil;
 
 
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static thiagoantunes.engineeringevaluation.data.source.TestData.CITIES;
 import static thiagoantunes.engineeringevaluation.data.source.TestData.USERS;
 import static thiagoantunes.engineeringevaluation.data.source.TestData.USER_ENTITY;
 
@@ -46,7 +45,6 @@ public class UserDaoTest {
                 AppDatabase.class).build();
 
         mUserDao = mDatabase.userDao();
-        mDatabase.cityDao().insertAll(CITIES);
     }
 
     @After
@@ -89,7 +87,7 @@ public class UserDaoTest {
         mUserDao.saveUser(USER_ENTITY);
 
         // When an user with the same id is inserted
-        User newUser= new User(USER_ENTITY.getId(),"Teste", "313141412", "Bairro Teste", 1, new Date());
+        User newUser= new User(USER_ENTITY.getId(),"Teste", "313141412", "Bairro Teste", "Belo Horizonte", new Date());
         mUserDao.saveUser(newUser);
         // When getting the user by id from the database
         User loaded = LiveDataTestUtil.getValue(mUserDao.getUserById(USER_ENTITY.getId()));
@@ -104,7 +102,7 @@ public class UserDaoTest {
         assertThat(user.getName(), is(user2.getName()));
         assertThat(user.getPhone(), is(user2.getPhone()));
         assertThat(user.getNeighborhood(), is(user2.getNeighborhood()));
-        assertThat(user.getCityId(), is(user2.getCityId()));
+        assertThat(user.getCity(), is(user2.getCity()));
         assertThat(user.getDateOfBirth(), is(user2.getDateOfBirth()));
     }
 }
