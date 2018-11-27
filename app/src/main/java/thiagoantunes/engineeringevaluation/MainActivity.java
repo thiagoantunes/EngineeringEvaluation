@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.useraddedit.UserAddEditActivity;
+import thiagoantunes.engineeringevaluation.userdetails.UserDetailsActivity;
+import thiagoantunes.engineeringevaluation.userdetails.UserDetailsFragment;
 import thiagoantunes.engineeringevaluation.userlist.UserClickCallback;
 import thiagoantunes.engineeringevaluation.userlist.UserListFragment;
 
@@ -15,7 +17,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements UserClickCallback {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,43 +33,6 @@ public class MainActivity extends AppCompatActivity implements UserClickCallback
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, fragment, UserListFragment.TAG).commit();
         }
-    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == ADD_USER_REQUEST && resultCode == RESULT_OK) {
-//            String name = data.getStringExtra(UserAddEditActivity.EXTRA_NAME);
-//            String phone = data.getStringExtra(UserAddEditActivity.EXTRA_PHONE);
-//            String neighborhood = data.getStringExtra(UserAddEditActivity.EXTRA_NEIGHBORHOOD);
-//            int cityId = data.getIntExtra(UserAddEditActivity.EXTRA_CITY_ID, 1);
-//            Date dateOfBitrh = (Date)data.getSerializableExtra(UserAddEditActivity.EXTRA_DATE_OF_BIRTH);
-//
-//            User note = new User(ThreadLocalRandom.current().nextInt(Integer.MIN_VALUE, Integer.MAX_VALUE),
-//                    name, phone, neighborhood, cityId, dateOfBitrh);
-//            //noteViewModel.insert(note);
-//
-//            Toast.makeText(this, "User saved", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(this, "User not saved", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-    }
-
-    public void setUpFab(){
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add_user);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, UserAddEditActivity.class);
-                startActivityForResult(intent, UserAddEditActivity.REQUEST_CODE);
-            }
-        });
     }
 
     @Override
@@ -92,20 +57,31 @@ public class MainActivity extends AppCompatActivity implements UserClickCallback
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    public void setUpFab(){
+        FloatingActionButton fab = findViewById(R.id.fab_add_user);
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, UserAddEditActivity.class);
+            startActivityForResult(intent, UserAddEditActivity.REQUEST_CODE);
+        });
+    }
+
     /** Shows the user detail fragment */
     public void showUserDetails(User user) {
+        Intent intent = new Intent(MainActivity.this, UserDetailsActivity.class);
+        intent.putExtra(UserDetailsActivity.EXTRA_USER_ID, user.getId());
+        startActivityForResult(intent, UserAddEditActivity.REQUEST_CODE);
 
 //        UserDetailsFragment userDetailsFragment = UserDetailsFragment.forUser(user.getId());
 //
 //        getSupportFragmentManager()
 //                .beginTransaction()
-//                .addToBackStack("product")
+//                .addToBackStack("user")
 //                .replace(R.id.fragment_container,
 //                        userDetailsFragment, null).commit();
-    }
-
-    @Override
-    public void onClick(User user) {
-
     }
 }

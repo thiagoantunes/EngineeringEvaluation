@@ -24,18 +24,17 @@ import java.util.Calendar;
 
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.databinding.UserAddEditFragmentBinding;
+import thiagoantunes.engineeringevaluation.userdetails.UserDetailsFragment;
 
 public class UserAddEditFragment extends Fragment {
 
-    public static final String ARGUMENT_EDIT_USER_ID = "EDIT_USER_ID";
+    public static final String KEY_EDIT_USER_ID = "EDIT_USER_ID";
 
     private UserAddEditViewModel mViewModel;
 
     private UserAddEditFragmentBinding mViewDataBinding;
 
-    public static UserAddEditFragment newInstance() {
-        return new UserAddEditFragment();
-    }
+    public static UserAddEditFragment newInstance(int userId) { return forUser(userId); }
 
     @Nullable
     @Override
@@ -47,11 +46,14 @@ public class UserAddEditFragment extends Fragment {
         }
 
         mViewModel = ViewModelProviders.of(getActivity()).get(UserAddEditViewModel.class);
+        mViewModel.start(getArguments().getInt(KEY_EDIT_USER_ID));
 
         Resources res = getResources();
         mViewModel.SetCities(Arrays.asList(res.getStringArray(R.array.cities_array)));
 
         mViewDataBinding.setViewmodel(mViewModel);
+
+        subscribeToModel();
 
         return mViewDataBinding.getRoot();
     }
@@ -65,16 +67,12 @@ public class UserAddEditFragment extends Fragment {
         setupDatePicker();
 
         setupPhoneEditText();
-
-        loadData();
     }
 
-    private void loadData() {
-        // Add or edit an existing task?
-        if (getArguments() != null) {
-            mViewModel.start(getArguments().getString(ARGUMENT_EDIT_USER_ID));
-        } else {
-            mViewModel.start(null);
+    private void subscribeToModel() {
+        // Observe user data
+        if(getArguments().getInt(KEY_EDIT_USER_ID) > 0){
+            mViewModel.getObservableUser().observe(this, user -> mViewModel.setUser(user));
         }
     }
 
@@ -118,6 +116,15 @@ public class UserAddEditFragment extends Fragment {
             EditText dateOfBirthEditText = getActivity().findViewById(R.id.edit_text_date_of_birth);
             dateOfBirthEditText.setText(day + "/" + (month + 1) + "/" + year);
         }
+    }
+
+    /** Creates product fragment for specific product ID */
+    public static UserAddEditFragment forUser(int userId) {
+        UserAddEditFragment fragment = new UserAddEditFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_EDIT_USER_ID, userId);
+        fragment.setArguments(args);
+        return fragment;
     }
 
 }
