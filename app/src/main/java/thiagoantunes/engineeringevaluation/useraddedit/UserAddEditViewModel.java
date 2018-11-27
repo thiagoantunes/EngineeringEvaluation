@@ -2,52 +2,44 @@ package thiagoantunes.engineeringevaluation.useraddedit;
 
 import android.app.Application;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-import androidx.annotation.NonNull;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import thiagoantunes.engineeringevaluation.EngineeringEvaluationApp;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
 import thiagoantunes.engineeringevaluation.data.source.UserRepository;
 import thiagoantunes.engineeringevaluation.util.SingleLiveEvent;
 
-import static java.text.DateFormat.getDateInstance;
-
 public class UserAddEditViewModel extends AndroidViewModel {
 
     public final ObservableField<String> name = new ObservableField<>();
-
     public final ObservableField<String> phone = new ObservableField<>();
-
     public final ObservableField<String> neighborhood = new ObservableField<>();
-
     public final ObservableField<String> dateOfBirth = new ObservableField<>();
+    public final ObservableInt cityIdx = new ObservableInt();
 
     public final ObservableBoolean dataLoading = new ObservableBoolean(false);
-
     private final SingleLiveEvent<Void> mUserUpdated = new SingleLiveEvent<>();
-
     private final UserRepository mUsersRepository;
 
     private int mUserId;
-
     private boolean mIsNewUser;
-
     private boolean mIsDataLoaded = false;
+    private List<String> cities = new ArrayList<>();
 
     public UserAddEditViewModel(Application context) {
         super(context);
         mUsersRepository = ((EngineeringEvaluationApp) context).getRepository();
+    }
+
+    public void SetCities(List<String> cities) {
+        this.cities = cities;
     }
 
     public void start(String temp) {
@@ -72,29 +64,11 @@ public class UserAddEditViewModel extends AndroidViewModel {
         mUsersRepository.getUser(userId);
     }
 
-    /*@Override
-    public void onUserLoaded(User user) {
-        name.set(user.getName());
-        phone.set(user.getPhone());
-        dateOfBirth.set(user.getDateOfBirth());
-        neighborhood.set(user.getNeighborhood());
-        dataLoading.set(false);
-        mIsDataLoaded = true;
-
-        // Note that there's no need to notify that the values changed because we're using
-        // ObservableFields.
-    }
-
-    @Override
-    public void onDataNotAvailable() {
-        dataLoading.set(false);
-    }*/
-
     // Called when clicking on fab.
     void saveUser() {
 
         User user = new User(ThreadLocalRandom.current().nextInt(Integer.MIN_VALUE, Integer.MAX_VALUE ),
-                name.get(), phone.get(), neighborhood.get(), "Belo Horizonte", DateConverter.toDate(dateOfBirth.get()));
+                name.get(), phone.get(), neighborhood.get(), cities.get(cityIdx.get()), DateConverter.toDate(dateOfBirth.get()));
         if (user.isEmpty()) {
             //mSnackbarText.setValue(R.string.empty_user_message);
             return;

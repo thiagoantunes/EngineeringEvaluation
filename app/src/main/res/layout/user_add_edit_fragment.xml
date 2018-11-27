@@ -59,10 +59,12 @@
             android:text="City:"
             android:textAppearance="@android:style/TextAppearance.Medium" />
 
-
-        <Spinner android:id="@+id/spinner_city"
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_city"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:entries="@array/cities_array"
+            android:selectedItemPosition="@={viewmodel.cityIdx}"/>
 
     </LinearLayout>
 </layout>

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.res.Resources;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.Spinner;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 import thiagoantunes.engineeringevaluation.R;
@@ -46,6 +48,10 @@ public class UserAddEditFragment extends Fragment {
         }
 
         mViewModel = ViewModelProviders.of(getActivity()).get(UserAddEditViewModel.class);
+
+        Resources res = getResources();
+        mViewModel.SetCities(Arrays.asList(res.getStringArray(R.array.cities_array)));
+
         mViewDataBinding.setViewmodel(mViewModel);
 
         return mViewDataBinding.getRoot();
@@ -58,8 +64,6 @@ public class UserAddEditFragment extends Fragment {
         setupFab();
 
         setupDatePicker();
-
-        setupSpinner();
 
         loadData();
     }
@@ -95,14 +99,6 @@ public class UserAddEditFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private void setupSpinner(){
-        Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_city);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.cities_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
     }
 
     public static class DatePickerFragment extends DialogFragment
