@@ -18,17 +18,11 @@ public interface UserDao {
     @Query("SELECT * FROM users")
     LiveData<List<User>> loadAllUsers();
 
-    @Query("SELECT * FROM users")
-    List<User> loadAllUsersSync();
-
     @Query("SELECT * FROM users WHERE id = :userId")
     LiveData<User> getUserById(int userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveUser(User user);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<User> users);
 
     @Query("SELECT users.* FROM users JOIN usersFts ON (users.id = usersFts.rowid) "
             + "WHERE usersFts MATCH :query")

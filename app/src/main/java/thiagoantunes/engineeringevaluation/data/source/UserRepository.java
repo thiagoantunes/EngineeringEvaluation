@@ -5,7 +5,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
 import thiagoantunes.engineeringevaluation.util.AppExecutors;
@@ -20,20 +19,10 @@ public class UserRepository  implements UserDataSource {
 
     private AppExecutors mAppExecutors;
 
-    private MediatorLiveData<List<User>> mObservableUsers;
-
     // Prevent direct instantiation.
     private UserRepository(AppDatabase database, @NonNull AppExecutors appExecutors) {
         mDatabase = database;
         mAppExecutors = appExecutors;
-        mObservableUsers = new MediatorLiveData<>();
-
-        mObservableUsers.addSource(mDatabase.userDao().loadAllUsers(),
-                users -> {
-                    if (mDatabase.getDatabaseCreated().getValue() != null) {
-                        mObservableUsers.postValue(users);
-                    }
-                });
     }
 
     public static UserRepository getInstance(AppDatabase database, @NonNull AppExecutors appExecutors) {
@@ -49,11 +38,11 @@ public class UserRepository  implements UserDataSource {
 
     @Override
     public LiveData<List<User>> getUsers() {
-        return mObservableUsers;
+        return mDatabase.userDao().loadAllUsers();
     }
 
     @Override
-    public LiveData<User> getUser(@NonNull int userId) {
+    public LiveData<User> getUser(int userId) {
         return mDatabase.userDao().getUserById(userId);
 
     }
@@ -61,12 +50,7 @@ public class UserRepository  implements UserDataSource {
     @Override
     public void saveUser(@NonNull User user) {
         checkNotNull(user);
-        Runnable saveRunnable = new Runnable() {
-            @Override
-            public void run() {
-                mDatabase.userDao().saveUser(user);
-            }
-        };
+        Runnable saveRunnable = () -> mDatabase.userDao().saveUser(user);
         mAppExecutors.diskIO().execute(saveRunnable);
     }
 

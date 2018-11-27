@@ -1,11 +1,14 @@
 package thiagoantunes.engineeringevaluation.userlist;
 
+import android.telephony.PhoneNumberUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
@@ -16,16 +19,16 @@ import thiagoantunes.engineeringevaluation.databinding.UserItemBinding;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
-    List<? extends User> mUserList;
+    private List<? extends User> mUserList;
 
     @Nullable
     private final UserClickCallback mUserClickCallback;
 
-    public UserAdapter(@Nullable UserClickCallback useritemNavigator) {
+    UserAdapter(@Nullable UserClickCallback useritemNavigator) {
         mUserClickCallback = useritemNavigator;
     }
 
-    public void setUserList(final List<? extends User> userList) {
+    void setUserList(final List<? extends User> userList) {
         if (mUserList == null) {
             mUserList = userList;
             notifyItemRangeInserted(0, userList.size());
@@ -66,8 +69,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
     }
 
+    @NonNull
     @Override
-    public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         UserItemBinding binding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()), R.layout.user_item,
                         parent, false);
@@ -76,8 +80,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     @Override
-    public void onBindViewHolder(UserViewHolder holder, int position) {
-        holder.binding.setUser(mUserList.get(position));
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        User user = mUserList.get(position);
+        holder.binding.setId(user.getId());
+        holder.binding.setName(user.getName());
+        holder.binding.setPhone(PhoneNumberUtils.formatNumber(user.getPhone(), Locale.getDefault().getCountry()));
         holder.binding.executePendingBindings();
     }
 
@@ -89,7 +96,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     static class UserViewHolder extends RecyclerView.ViewHolder {
         final UserItemBinding binding;
 
-        public UserViewHolder(UserItemBinding binding) {
+        UserViewHolder(UserItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

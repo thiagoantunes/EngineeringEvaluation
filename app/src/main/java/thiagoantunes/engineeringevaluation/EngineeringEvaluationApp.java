@@ -21,7 +21,7 @@ public class EngineeringEvaluationApp extends Application {
     }
 
     public AppDatabase getDatabase() {
-        return AppDatabase.getInstance(this, mAppExecutors);
+        return AppDatabase.getInstance(this);
     }
 
     public UserRepository getRepository() {

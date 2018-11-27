@@ -71,10 +71,10 @@ public class UserAddEditViewModel extends AndroidViewModel {
     void saveUser() {
 
         String formatedPhone = PhoneNumberUtils.formatNumberToE164(phone.get(), Locale.getDefault().getCountry());
-        String teste = PhoneNumberUtils.formatNumber(formatedPhone, Locale.getDefault().getCountry());
+        //String teste = PhoneNumberUtils.formatNumber(formatedPhone, Locale.getDefault().getCountry());
 
         User user = new User(
-                ThreadLocalRandom.current().nextInt(Integer.MIN_VALUE, Integer.MAX_VALUE ),
+                0,
                 Objects.requireNonNull(name.get()), formatedPhone,
                 Objects.requireNonNull(neighborhood.get()),
                 cities.get(cityIdx.get()),

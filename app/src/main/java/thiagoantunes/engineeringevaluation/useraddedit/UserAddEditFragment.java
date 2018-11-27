@@ -1,8 +1,10 @@
 package thiagoantunes.engineeringevaluation.useraddedit;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.res.Resources;
@@ -21,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Objects;
 
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.databinding.UserAddEditFragmentBinding;
@@ -28,24 +31,25 @@ import thiagoantunes.engineeringevaluation.userdetails.UserDetailsFragment;
 
 public class UserAddEditFragment extends Fragment {
 
-    public static final String KEY_EDIT_USER_ID = "EDIT_USER_ID";
+    private static final String KEY_EDIT_USER_ID = "EDIT_USER_ID";
 
     private UserAddEditViewModel mViewModel;
 
     private UserAddEditFragmentBinding mViewDataBinding;
 
-    public static UserAddEditFragment newInstance(int userId) { return forUser(userId); }
+    static UserAddEditFragment newInstance(int userId) { return forUser(userId); }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.user_add_edit_fragment, container, false);
         if (mViewDataBinding == null) {
             mViewDataBinding = UserAddEditFragmentBinding.bind(root);
         }
 
-        mViewModel = ViewModelProviders.of(getActivity()).get(UserAddEditViewModel.class);
+        mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(UserAddEditViewModel.class);
+        assert getArguments() != null;
         mViewModel.start(getArguments().getInt(KEY_EDIT_USER_ID));
 
         Resources res = getResources();
@@ -71,24 +75,25 @@ public class UserAddEditFragment extends Fragment {
 
     private void subscribeToModel() {
         // Observe user data
+        assert getArguments() != null;
         if(getArguments().getInt(KEY_EDIT_USER_ID) > 0){
             mViewModel.getObservableUser().observe(this, user -> mViewModel.setUser(user));
         }
     }
 
     private void setupFab() {
-        FloatingActionButton fab = getActivity().findViewById(R.id.fab_save_user);
+        FloatingActionButton fab = Objects.requireNonNull(getActivity()).findViewById(R.id.fab_save_user);
         fab.setImageResource(R.drawable.ic_done);
         fab.setOnClickListener(v -> mViewModel.saveUser());
     }
 
     private void setupPhoneEditText(){
-        EditText phoneInput = getActivity().findViewById(R.id.edit_text_phone);
+        EditText phoneInput = Objects.requireNonNull(getActivity()).findViewById(R.id.edit_text_phone);
         phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     private void setupDatePicker(){
-        EditText dateOfBirthEditText = getActivity().findViewById(R.id.edit_text_date_of_birth);
+        EditText dateOfBirthEditText = Objects.requireNonNull(getActivity()).findViewById(R.id.edit_text_date_of_birth);
         dateOfBirthEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if(hasFocus){
                 DialogFragment newFragment = new DatePickerFragment();
@@ -100,6 +105,7 @@ public class UserAddEditFragment extends Fragment {
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
@@ -109,9 +115,10 @@ public class UserAddEditFragment extends Fragment {
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            return new DatePickerDialog(Objects.requireNonNull(getActivity()), this, year, month, day);
         }
 
+        @SuppressLint("SetTextI18n")
         public void onDateSet(DatePicker view, int year, int month, int day) {
             EditText dateOfBirthEditText = getActivity().findViewById(R.id.edit_text_date_of_birth);
             dateOfBirthEditText.setText(day + "/" + (month + 1) + "/" + year);
@@ -119,7 +126,7 @@ public class UserAddEditFragment extends Fragment {
     }
 
     /** Creates product fragment for specific product ID */
-    public static UserAddEditFragment forUser(int userId) {
+    private static UserAddEditFragment forUser(int userId) {
         UserAddEditFragment fragment = new UserAddEditFragment();
         Bundle args = new Bundle();
         args.putInt(KEY_EDIT_USER_ID, userId);

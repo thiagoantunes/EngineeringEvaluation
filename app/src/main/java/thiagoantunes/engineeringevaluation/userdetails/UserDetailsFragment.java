@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.databinding.UserDetailsFragmentBinding;
 import thiagoantunes.engineeringevaluation.useraddedit.UserAddEditActivity;
-import thiagoantunes.engineeringevaluation.useraddedit.UserAddEditFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +18,19 @@ import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Objects;
+
 public class UserDetailsFragment extends Fragment {
 
     private static final String KEY_USER_ID = "user_id";
 
-    public static final int REQUEST_EDIT_USER = 1;
+    private static final int REQUEST_EDIT_USER = 1;
 
     private UserDetailsFragmentBinding mBinding;
 
     private UserDetailsViewModel mViewModel;
 
-    public static UserDetailsFragment newInstance(int userId) {
+    static UserDetailsFragment newInstance(int userId) {
         return forUser(userId);
     }
 
@@ -42,7 +43,8 @@ public class UserDetailsFragment extends Fragment {
             mBinding = UserDetailsFragmentBinding.bind(root);
         }
 
-        mViewModel = ViewModelProviders.of(getActivity()).get(UserDetailsViewModel.class);
+        mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(UserDetailsViewModel.class);
+        assert getArguments() != null;
         mViewModel.start(getArguments().getInt(KEY_USER_ID));
 
         mBinding.setViewmodel(mViewModel);
@@ -59,10 +61,11 @@ public class UserDetailsFragment extends Fragment {
     }
 
     public void setUpFab(){
-        FloatingActionButton fab = getActivity().findViewById(R.id.fab_edit);
+        FloatingActionButton fab = Objects.requireNonNull(getActivity()).findViewById(R.id.fab_edit);
         fab.setImageResource(R.drawable.ic_edit);
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), UserAddEditActivity.class);
+            assert getArguments() != null;
             intent.putExtra(UserAddEditActivity.EXTRA_EDIT_USER_ID, getArguments().getInt(KEY_USER_ID));
             startActivityForResult(intent, REQUEST_EDIT_USER);
         });
@@ -74,7 +77,7 @@ public class UserDetailsFragment extends Fragment {
     }
 
     /** Creates product fragment for specific product ID */
-    public static UserDetailsFragment forUser(int userId) {
+    private static UserDetailsFragment forUser(int userId) {
         UserDetailsFragment fragment = new UserDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(KEY_USER_ID, userId);

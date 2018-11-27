@@ -15,11 +15,10 @@ import java.util.Date;
 
 import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
 
-//@Fts4
 @Entity(tableName = "users")
 public final class User {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private final int mId;
 
@@ -47,7 +46,7 @@ public final class User {
 
     public User(int mId, @NonNull String mName,
                 @NonNull String mPhone, @NonNull String mNeighborhood,
-                String mCity, @NonNull Date mDateOfBirth) {
+                @NonNull String mCity, @NonNull Date mDateOfBirth) {
         this.mId = mId;
         this.mName = mName;
         this.mPhone = mPhone;
@@ -85,6 +84,7 @@ public final class User {
         return mNeighborhood;
     }
 
+    @NonNull
     public String getCity() {
         return mCity;
     }

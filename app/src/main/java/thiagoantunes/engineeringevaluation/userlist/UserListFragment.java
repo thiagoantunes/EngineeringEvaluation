@@ -1,42 +1,54 @@
 package thiagoantunes.engineeringevaluation.userlist;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
-import thiagoantunes.engineeringevaluation.MainActivity;
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.data.User;
-import thiagoantunes.engineeringevaluation.databinding.UserlistFragmentBinding;
+import thiagoantunes.engineeringevaluation.databinding.UserListFragmentBinding;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import java.util.List;
+import java.util.Objects;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class UserListFragment extends Fragment {
 
-    public static final String TAG = "UserListViewModel";
+    static final String TAG = "UserListViewModel";
 
     private UserAdapter mUserAdapter;
 
-    private UserlistFragmentBinding mBinding;
+    private UserListFragmentBinding mBinding;
+
+    private UserListViewModel mViewModel;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.userlist_fragment, container, false);
+        setHasOptionsMenu(true);
+
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.user_list_fragment, container, false);
+
+        mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(UserListViewModel.class);
 
         mUserAdapter = new UserAdapter(mUserClickCallback);
+
         mBinding.userList.setAdapter(mUserAdapter);
+
+        subscribeToModel(mViewModel.getUsers());
 
         return mBinding.getRoot();
     }
@@ -44,37 +56,48 @@ public class UserListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final UserListViewModel viewModel =
-                ViewModelProviders.of(this).get(UserListViewModel.class);
-
-        subscribeUi(viewModel);
     }
 
-    private void subscribeUi(UserListViewModel viewModel) {
+    private void subscribeToModel(LiveData<List<User>> liveData) {
         // Update the list when the data changes
-        viewModel.getUsers().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(@Nullable List<User> myUsers) {
-                if (myUsers != null) {
-                    mBinding.setIsLoading(false);
-                    mUserAdapter.setUserList(myUsers);
-                } else {
-                    mBinding.setIsLoading(true);
-                }
-                // espresso does not know how to wait for data binding's loop so we execute changes
-                // sync.
-                mBinding.executePendingBindings();
+        liveData.observe(this, users -> {
+            if (users != null) {
+                mUserAdapter.setUserList(users);
             }
+            mBinding.executePendingBindings();
         });
     }
 
-    private final UserClickCallback mUserClickCallback = new UserClickCallback() {
-        @Override
-        public void onClick(User user) {
+    private final UserClickCallback mUserClickCallback = user -> {
 
-            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-                ((MainActivity) getActivity()).showUserDetails(user);
-            }
+        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            ((UserListActivity) Objects.requireNonNull(getActivity())).showUserDetails(user);
         }
     };
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.options_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                if (query == null || query.isEmpty()) {
+                    subscribeToModel(mViewModel.getUsers());
+                } else {
+                    subscribeToModel(mViewModel.searchUsers("*" + query + "*"));
+                }
+                return false;
+            }
+        });
+    }
 }

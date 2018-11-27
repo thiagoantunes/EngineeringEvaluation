@@ -2,8 +2,12 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="user"
-            type="thiagoantunes.engineeringevaluation.data.User"/>
+        <variable name="id"
+            type="int"/>
+        <variable name="name"
+            type="String"/>
+        <variable name="phone"
+            type="String"/>
         <variable name="callback"
             type="thiagoantunes.engineeringevaluation.userlist.UserClickCallback"/>
     </data>
@@ -12,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:onClick="@{() ->  callback.onClick(user)}"
+        android:onClick="@{() ->  callback.onClick(id)}"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp">
         <RelativeLayout
@@ -26,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{user.name}"
+                android:text="@{name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
@@ -34,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_view_title"
-                android:text="@{user.phone}" />
+                android:text="@{phone}" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

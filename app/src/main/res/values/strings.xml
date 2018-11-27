@@ -5,6 +5,7 @@
     <string name="cd_user_name">Users name</string>
     <string name="loading_users">Loading users...</string>
     <string name="title_activity_user_details">UserDetailsActivity</string>
+    <string name="search_for_users">Search for users...</string>
 
     <string-array name="cities_array">
         <item>Belo Horizonte</item>

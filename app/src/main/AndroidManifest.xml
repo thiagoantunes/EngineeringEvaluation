@@ -13,31 +13,35 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".MainActivity"
+            android:name=".userlist.UserListActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
+
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".useraddedit.UserAddEditActivity"
-            android:label="User Form"
-            android:parentActivityName=".MainActivity">
+            android:label="User Form">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="thiagoantunes.engineeringevaluation.MainActivity" />
+                android:value="thiagoantunes.engineeringevaluation.userlist.UserListActivity" />
         </activity>
         <activity
             android:name=".userdetails.UserDetailsActivity"
             android:label="User Details"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".userlist.UserListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="thiagoantunes.engineeringevaluation.MainActivity" />
+                android:value="thiagoantunes.engineeringevaluation.userlist.UserListActivity" />
         </activity>
     </application>
 

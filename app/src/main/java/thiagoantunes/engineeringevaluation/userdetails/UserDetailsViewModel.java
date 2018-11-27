@@ -23,7 +23,7 @@ public class UserDetailsViewModel extends AndroidViewModel {
         mUserRepository =  ((EngineeringEvaluationApp) application).getRepository();
     }
 
-    public LiveData<User> getObservableUser() {
+    LiveData<User> getObservableUser() {
         return mObservableUser;
     }
 
