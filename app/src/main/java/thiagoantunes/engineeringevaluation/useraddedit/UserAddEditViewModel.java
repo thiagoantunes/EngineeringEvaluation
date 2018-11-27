@@ -1,9 +1,11 @@
 package thiagoantunes.engineeringevaluation.useraddedit;
 
 import android.app.Application;
+import android.telephony.PhoneNumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 import androidx.databinding.ObservableBoolean;
@@ -67,8 +69,11 @@ public class UserAddEditViewModel extends AndroidViewModel {
     // Called when clicking on fab.
     void saveUser() {
 
+        String formatedPhone = PhoneNumberUtils.formatNumberToE164(phone.get(), Locale.getDefault().getCountry());
+        String teste = PhoneNumberUtils.formatNumber(formatedPhone, Locale.getDefault().getCountry());
+
         User user = new User(ThreadLocalRandom.current().nextInt(Integer.MIN_VALUE, Integer.MAX_VALUE ),
-                name.get(), phone.get(), neighborhood.get(), cities.get(cityIdx.get()), DateConverter.toDate(dateOfBirth.get()));
+                name.get(), formatedPhone, neighborhood.get(), cities.get(cityIdx.get()), DateConverter.toDate(dateOfBirth.get()));
         if (user.isEmpty()) {
             //mSnackbarText.setValue(R.string.empty_user_message);
             return;

@@ -10,13 +10,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -65,6 +64,8 @@ public class UserAddEditFragment extends Fragment {
 
         setupDatePicker();
 
+        setupPhoneEditText();
+
         loadData();
     }
 
@@ -80,23 +81,20 @@ public class UserAddEditFragment extends Fragment {
     private void setupFab() {
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_save_user);
         fab.setImageResource(R.drawable.ic_done);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.saveUser();
-            }
-        });
+        fab.setOnClickListener(v -> mViewModel.saveUser());
+    }
+
+    private void setupPhoneEditText(){
+        EditText phoneInput = getActivity().findViewById(R.id.edit_text_phone);
+        phoneInput.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
     }
 
     private void setupDatePicker(){
         EditText dateOfBirthEditText = getActivity().findViewById(R.id.edit_text_date_of_birth);
-        dateOfBirthEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    DialogFragment newFragment = new DatePickerFragment();
-                    newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-                }
+        dateOfBirthEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
             }
         });
     }

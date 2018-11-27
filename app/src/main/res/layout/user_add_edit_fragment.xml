@@ -20,35 +20,61 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:visibility="@{viewmodel.dataLoading ? View.GONE : View.VISIBLE}">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Name:"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
+
         <EditText
             android:id="@+id/edit_text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
             android:text="@={viewmodel.name}"
             android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Phone::"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
 
         <EditText
             android:id="@+id/edit_text_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone"
+            android:hint="(31) 99999-9999"
             android:text="@={viewmodel.phone}"
-            android:inputType="text" />
+            android:inputType="phone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Neighborhood::"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
 
         <EditText
             android:id="@+id/edit_text_neighborhood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Neighborhood"
             android:text="@={viewmodel.neighborhood}"
             android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Date of birth:"
+            android:textAppearance="@android:style/TextAppearance.Medium" />
 
         <EditText
             android:id="@+id/edit_text_date_of_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Date of birth"
+            android:hint="01/12/1990"
             android:text="@={viewmodel.dateOfBirth}"
             android:inputType="date"  />
 
