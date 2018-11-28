@@ -34,6 +34,8 @@ public class UserListFragment extends Fragment {
 
     private UserListViewModel mViewModel;
 
+    private boolean mIsFiltering  = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -62,11 +64,8 @@ public class UserListFragment extends Fragment {
         // Update the list when the data changes
         liveData.observe(this, users -> {
             if (users != null) {
-                mBinding.setIsLoading(false);
-                mBinding.setEmptyList(users.isEmpty());
+                mBinding.setEmptyList(users.isEmpty() && !mIsFiltering);
                 mUserAdapter.setUserList(users);
-            }else {
-                mBinding.setIsLoading(true);
             }
             mBinding.executePendingBindings();
         });
@@ -97,7 +96,9 @@ public class UserListFragment extends Fragment {
             public boolean onQueryTextChange(String query) {
                 if (query == null || query.isEmpty()) {
                     subscribeToModel(mViewModel.getUsers());
+                    mIsFiltering = false;
                 } else {
+                    mIsFiltering = true;
                     subscribeToModel(mViewModel.searchUsers("*" + query + "*"));
                 }
                 return false;

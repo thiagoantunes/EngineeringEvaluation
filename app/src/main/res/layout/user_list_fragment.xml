@@ -5,21 +5,10 @@
 
     <data>
         <import type="android.view.View" />
-
-        <variable
-            name="viewmodel"
-            type="thiagoantunes.engineeringevaluation.userlist.UserListViewModel" />
-
-        <variable
-            name="isLoading"
-            type="boolean" />
-
         <variable
             name="emptyList"
             type="boolean" />
     </data>
-
-
 
     <RelativeLayout
         android:id="@+id/tasksContainer"
@@ -42,8 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:listitem="@layout/user_item"
-                app:layoutManager="LinearLayoutManager"
-                app:visibleGone="@{!isLoading}"/>
+                app:layoutManager="LinearLayoutManager"/>
         </LinearLayout>
 
         <LinearLayout
