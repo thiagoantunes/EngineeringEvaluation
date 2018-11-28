@@ -19,6 +19,9 @@
     <string name="name">Name</string>
     <string name="centro">Centro</string>
     <string name="cancel_dialog">cancel</string>
+    <string name="user_s_list_is_empty">User`s list is empty!</string>
+    <string name="add_an_user">Add an USER +</string>
+    <string name="no_users_label">There is no users yet =/</string>
 
     <string-array name="cities_array">
         <item>Belo Horizonte</item>

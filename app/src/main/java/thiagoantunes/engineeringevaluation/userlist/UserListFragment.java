@@ -62,7 +62,11 @@ public class UserListFragment extends Fragment {
         // Update the list when the data changes
         liveData.observe(this, users -> {
             if (users != null) {
+                mBinding.setIsLoading(false);
+                mBinding.setEmptyList(users.isEmpty());
                 mUserAdapter.setUserList(users);
+            }else {
+                mBinding.setIsLoading(true);
             }
             mBinding.executePendingBindings();
         });

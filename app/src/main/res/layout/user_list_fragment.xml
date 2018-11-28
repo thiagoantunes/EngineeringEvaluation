@@ -9,23 +9,68 @@
         <variable
             name="viewmodel"
             type="thiagoantunes.engineeringevaluation.userlist.UserListViewModel" />
+
+        <variable
+            name="isLoading"
+            type="boolean" />
+
+        <variable
+            name="emptyList"
+            type="boolean" />
     </data>
 
-    <LinearLayout
+
+
+    <RelativeLayout
+        android:id="@+id/tasksContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundColor"
+        android:clickable="true"
         android:orientation="vertical">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/user_list"
-            android:contentDescription="@string/list_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/user_item"
-            app:layoutManager="LinearLayoutManager"/>
-    </LinearLayout>
+            android:background="@color/backgroundColor"
+            android:orientation="vertical"
+            app:visibleGone="@{!emptyList}">
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/user_list"
+                android:contentDescription="@string/list_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/user_item"
+                app:layoutManager="LinearLayoutManager"
+                app:visibleGone="@{!isLoading}"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/noTasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            app:visibleGone="@{emptyList}">
+
+
+            <ImageView
+                android:id="@+id/noUsersIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_person_add_black_24dp" />
+
+            <TextView
+                android:id="@+id/noTasksMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/no_users_label"
+                android:layout_marginBottom="@dimen/list_item_padding"/>
+
+        </LinearLayout>
+    </RelativeLayout>
 
 </layout>
