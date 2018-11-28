@@ -17,6 +17,7 @@ import thiagoantunes.engineeringevaluation.EngineeringEvaluationApp;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
 import thiagoantunes.engineeringevaluation.data.source.UserRepository;
+import thiagoantunes.engineeringevaluation.dtos.UserDto;
 import thiagoantunes.engineeringevaluation.util.SingleLiveEvent;
 
 public class UserAddEditViewModel extends AndroidViewModel {
@@ -74,7 +75,7 @@ public class UserAddEditViewModel extends AndroidViewModel {
         //String teste = PhoneNumberUtils.formatNumber(formatedPhone, Locale.getDefault().getCountry());
 
         User user = new User(
-                0,
+                this.user.get() != null ? this.user.get().getId() : 0,
                 Objects.requireNonNull(name.get()), formatedPhone,
                 Objects.requireNonNull(neighborhood.get()),
                 cities.get(cityIdx.get()),

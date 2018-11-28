@@ -7,7 +7,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import thiagoantunes.engineeringevaluation.R;
-import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.useraddedit.UserAddEditActivity;
 import thiagoantunes.engineeringevaluation.userdetails.UserDetailsActivity;
 

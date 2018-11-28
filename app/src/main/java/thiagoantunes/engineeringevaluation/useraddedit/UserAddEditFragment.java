@@ -28,6 +28,7 @@ import java.util.Objects;
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.databinding.UserAddEditFragmentBinding;
 import thiagoantunes.engineeringevaluation.userdetails.UserDetailsFragment;
+import thiagoantunes.engineeringevaluation.util.DateInputMask;
 
 public class UserAddEditFragment extends Fragment {
 
@@ -100,6 +101,8 @@ public class UserAddEditFragment extends Fragment {
                 newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
             }
         });
+
+        //DateInputMask teste = new DateInputMask(dateOfBirthEditText);
     }
 
     public static class DatePickerFragment extends DialogFragment

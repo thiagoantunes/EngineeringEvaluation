@@ -6,6 +6,10 @@
     <string name="loading_users">Loading users...</string>
     <string name="title_activity_user_details">UserDetailsActivity</string>
     <string name="search_for_users">Search for users...</string>
+    <string name="phone">Phone:</string>
+    <string name="city">City:</string>
+    <string name="neightborhood">Neightborhood:</string>
+    <string name="date_of_birth">Date of birth:</string>
 
     <string-array name="cities_array">
         <item>Belo Horizonte</item>
