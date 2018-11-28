@@ -83,13 +83,34 @@
             android:text="@string/date_of_birth"
             android:textAppearance="@android:style/TextAppearance.Medium" />
 
-        <EditText
-            android:id="@+id/edit_text_date_of_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="dd/mm/yyyy"
-            android:text="@={viewmodel.dateOfBirth}"
-            android:inputType="date"  />
+        <!--<EditText-->
+            <!--android:id="@+id/edit_text_date_of_birth"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="dd/mm/yyyy"-->
+            <!--android:text="@={viewmodel.dateOfBirth}"-->
+            <!--android:inputType="date"  />-->
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_height="wrap_content" android:orientation="horizontal"
+            android:layout_width="fill_parent">
+            <EditText
+
+                android:id="@+id/edit_text_date_of_birth"
+                android:text="@={viewmodel.dateOfBirth}"
+                android:inputType="date"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp">
+            </EditText>
+            <ImageButton
+                android:src="@drawable/ic_date_range"
+                android:id="@+id/btn_date_picker_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </ImageButton>
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

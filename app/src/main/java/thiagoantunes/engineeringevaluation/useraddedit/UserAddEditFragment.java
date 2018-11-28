@@ -1,7 +1,6 @@
 package thiagoantunes.engineeringevaluation.useraddedit;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -19,15 +18,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Objects;
 
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.databinding.UserAddEditFragmentBinding;
+import thiagoantunes.engineeringevaluation.util.DateInputMask;
 import thiagoantunes.engineeringevaluation.util.SnackbarMessage;
 import thiagoantunes.engineeringevaluation.util.SnackbarUtils;
 
@@ -98,14 +101,13 @@ public class UserAddEditFragment extends Fragment {
 
     private void setupDatePicker(){
         EditText dateOfBirthEditText = Objects.requireNonNull(getActivity()).findViewById(R.id.edit_text_date_of_birth);
-        dateOfBirthEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus){
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-            }
-        });
+        ImageButton btnOpenDatePickerDialog =  Objects.requireNonNull(getActivity()).findViewById(R.id.btn_date_picker_dialog);
+        btnOpenDatePickerDialog.setOnClickListener((v -> {
+            DialogFragment newFragment = new DatePickerFragment();
+            newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+        }));
 
-        //DateInputMask teste = new DateInputMask(dateOfBirthEditText);
+        DateInputMask teste = new DateInputMask(dateOfBirthEditText);
     }
 
     private void setupSnackBar() {
@@ -130,8 +132,9 @@ public class UserAddEditFragment extends Fragment {
 
         @SuppressLint("SetTextI18n")
         public void onDateSet(DatePicker view, int year, int month, int day) {
+            NumberFormat formatter = new DecimalFormat("00");
             EditText dateOfBirthEditText = getActivity().findViewById(R.id.edit_text_date_of_birth);
-            dateOfBirthEditText.setText(day + "/" + (month + 1) + "/" + year);
+            dateOfBirthEditText.setText(formatter.format(day) + formatter.format((month + 1)) + year);
         }
     }
 

@@ -69,7 +69,7 @@ public class UserAddEditViewModel extends AndroidViewModel {
     }
 
     public void setUser(User user) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyy",
                 java.util.Locale.getDefault());
         this.user.set(user);
         name.set(user.getName());
