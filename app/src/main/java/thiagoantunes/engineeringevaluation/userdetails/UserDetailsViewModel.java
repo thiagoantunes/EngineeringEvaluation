@@ -20,7 +20,6 @@ public class UserDetailsViewModel extends AndroidViewModel {
 
     public ObservableField<UserDto> userDto = new ObservableField<>();
 
-
     public UserDetailsViewModel(@NonNull Application application) {
         super(application);
         mUserRepository =  ((EngineeringEvaluationApp) application).getRepository();

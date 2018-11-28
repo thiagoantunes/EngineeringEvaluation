@@ -5,7 +5,6 @@ import android.telephony.PhoneNumberUtils;
 
 import com.google.common.base.Strings;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,11 +69,8 @@ public class UserAddEditViewModel extends AndroidViewModel {
     }
 
     public void setUser(User user) {
-        //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplication());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",
                 java.util.Locale.getDefault());
-
-        String teste = dateFormat.format(user.getDateOfBirth());
         this.user.set(user);
         name.set(user.getName());
         phone.set(user.getPhone());

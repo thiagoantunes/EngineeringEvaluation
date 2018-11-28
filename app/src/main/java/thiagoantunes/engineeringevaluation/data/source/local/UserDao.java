@@ -22,7 +22,7 @@ public interface UserDao {
     LiveData<User> getUserById(int userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveUser(User user);
+    long saveUser(User user);
 
     @Query("SELECT users.* FROM users JOIN usersFts ON (users.id = usersFts.rowid) "
             + "WHERE usersFts MATCH :query")
