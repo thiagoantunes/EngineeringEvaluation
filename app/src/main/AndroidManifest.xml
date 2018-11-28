@@ -35,14 +35,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="thiagoantunes.engineeringevaluation.userlist.UserListActivity" />
         </activity>
-        <activity
-            android:name=".userdetails.UserDetailsActivity"
-            android:label="User Details"
-            android:parentActivityName=".userlist.UserListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="thiagoantunes.engineeringevaluation.userlist.UserListActivity" />
-        </activity>
     </application>
 
 </manifest>

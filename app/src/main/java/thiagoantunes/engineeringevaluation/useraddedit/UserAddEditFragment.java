@@ -28,8 +28,6 @@ import java.util.Objects;
 
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.databinding.UserAddEditFragmentBinding;
-import thiagoantunes.engineeringevaluation.userdetails.UserDetailsFragment;
-import thiagoantunes.engineeringevaluation.util.DateInputMask;
 import thiagoantunes.engineeringevaluation.util.SnackbarMessage;
 import thiagoantunes.engineeringevaluation.util.SnackbarUtils;
 

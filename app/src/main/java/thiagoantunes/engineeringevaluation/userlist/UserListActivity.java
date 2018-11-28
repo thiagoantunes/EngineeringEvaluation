@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.useraddedit.UserAddEditActivity;
-import thiagoantunes.engineeringevaluation.userdetails.UserDetailsActivity;
+import thiagoantunes.engineeringevaluation.userdetails.UserDetailsDialog;
 
 
 public class UserListActivity extends AppCompatActivity {
@@ -44,8 +44,10 @@ public class UserListActivity extends AppCompatActivity {
 
     /** Shows the user detail fragment */
     public void showUserDetails(int userId) {
-        Intent intent = new Intent(UserListActivity.this, UserDetailsActivity.class);
-        intent.putExtra(UserDetailsActivity.EXTRA_USER_ID, userId);
-        startActivityForResult(intent, UserAddEditActivity.REQUEST_CODE);
+        Bundle bundle = new Bundle();
+        bundle.putInt("USER_ID",userId);
+        UserDetailsDialog dialog = new UserDetailsDialog();
+        dialog.setArguments(bundle);
+        dialog.show(getSupportFragmentManager() , "Edit User");
     }
 }

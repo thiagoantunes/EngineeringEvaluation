@@ -18,6 +18,7 @@
     <string name="required_date">Date of birth is required</string>
     <string name="name">Name</string>
     <string name="centro">Centro</string>
+    <string name="cancel_dialog">cancel</string>
 
     <string-array name="cities_array">
         <item>Belo Horizonte</item>
