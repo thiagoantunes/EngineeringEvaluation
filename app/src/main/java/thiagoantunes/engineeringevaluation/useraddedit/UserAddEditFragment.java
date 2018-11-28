@@ -1,6 +1,7 @@
 package thiagoantunes.engineeringevaluation.useraddedit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -29,6 +30,8 @@ import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.databinding.UserAddEditFragmentBinding;
 import thiagoantunes.engineeringevaluation.userdetails.UserDetailsFragment;
 import thiagoantunes.engineeringevaluation.util.DateInputMask;
+import thiagoantunes.engineeringevaluation.util.SnackbarMessage;
+import thiagoantunes.engineeringevaluation.util.SnackbarUtils;
 
 public class UserAddEditFragment extends Fragment {
 
@@ -72,6 +75,8 @@ public class UserAddEditFragment extends Fragment {
         setupDatePicker();
 
         setupPhoneEditText();
+
+        setupSnackBar();
     }
 
     private void subscribeToModel() {
@@ -103,6 +108,10 @@ public class UserAddEditFragment extends Fragment {
         });
 
         //DateInputMask teste = new DateInputMask(dateOfBirthEditText);
+    }
+
+    private void setupSnackBar() {
+        mViewModel.getSnackbarMessage().observe(this, (SnackbarMessage.SnackbarObserver) snackbarMessageResourceId -> SnackbarUtils.showSnackbar(getView(), getString(snackbarMessageResourceId)));
     }
 
     public static class DatePickerFragment extends DialogFragment

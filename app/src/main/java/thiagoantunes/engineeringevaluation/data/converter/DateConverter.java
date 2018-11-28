@@ -17,18 +17,19 @@ public class DateConverter {
         return date == null ? null : date.getTime();
     }
 
-    public static Date toDate(String stringDate){
-        Date date;
+    /** Returns null if the string is a invalid date */
+    public static Date convertAndValidateDateOfbirth(String stringDate){
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy",
                 java.util.Locale.getDefault());
         try {
-            date = format.parse(stringDate);
-            System.out.println(date);
+            Date date = format.parse(stringDate);
+            Date today = new Date();
+            if(date.getTime() > today.getTime()){
+                return null;
+            }
             return date;
         } catch (ParseException e) {
-            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 }

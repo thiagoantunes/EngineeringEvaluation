@@ -3,22 +3,26 @@ package thiagoantunes.engineeringevaluation.useraddedit;
 import android.app.Application;
 import android.telephony.PhoneNumberUtils;
 
+import com.google.common.base.Strings;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import thiagoantunes.engineeringevaluation.EngineeringEvaluationApp;
+import thiagoantunes.engineeringevaluation.R;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.converter.DateConverter;
 import thiagoantunes.engineeringevaluation.data.source.UserRepository;
-import thiagoantunes.engineeringevaluation.dtos.UserDto;
 import thiagoantunes.engineeringevaluation.util.SingleLiveEvent;
+import thiagoantunes.engineeringevaluation.util.SnackbarMessage;
 
 public class UserAddEditViewModel extends AndroidViewModel {
 
@@ -31,6 +35,8 @@ public class UserAddEditViewModel extends AndroidViewModel {
     private List<String> cities = new ArrayList<>();
 
     private final SingleLiveEvent<Void> mUserUpdated = new SingleLiveEvent<>();
+
+    private final SnackbarMessage mSnackBarText = new SnackbarMessage();
 
     public final ObservableField<String> name = new ObservableField<>();
     public final ObservableField<String> phone = new ObservableField<>();
@@ -55,38 +61,73 @@ public class UserAddEditViewModel extends AndroidViewModel {
 
     SingleLiveEvent<Void> getUserUpdatedEvent() { return mUserUpdated; }
 
+    SnackbarMessage getSnackbarMessage() {
+        return mSnackBarText;
+    }
+
     void SetCities(List<String> cities) {
         this.cities = cities;
     }
 
     public void setUser(User user) {
+        //DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplication());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy",
+                java.util.Locale.getDefault());
+
+        String teste = dateFormat.format(user.getDateOfBirth());
         this.user.set(user);
         name.set(user.getName());
         phone.set(user.getPhone());
         neighborhood.set(user.getNeighborhood());
         cityIdx.set(cities.indexOf(user.getCity()));
-        dateOfBirth.set(user.getDateOfBirth().toString());
+        dateOfBirth.set(dateFormat.format(user.getDateOfBirth()));
     }
 
     // Called when clicking on fab.
     void saveUser() {
+        if(validUser()){
+            mUserRepository.saveUser(mapUserFields());
+            mUserUpdated.call();
+        }
+    }
 
-        String formatedPhone = PhoneNumberUtils.formatNumberToE164(phone.get(), Locale.getDefault().getCountry());
-        //String teste = PhoneNumberUtils.formatNumber(formatedPhone, Locale.getDefault().getCountry());
-
-        User user = new User(
-                this.user.get() != null ? this.user.get().getId() : 0,
-                Objects.requireNonNull(name.get()), formatedPhone,
-                Objects.requireNonNull(neighborhood.get()),
-                cities.get(cityIdx.get()),
-                Objects.requireNonNull(DateConverter.toDate(dateOfBirth.get())));
-
-        if (user.isEmpty()) {
-            //mSnackbarText.setValue(R.string.empty_user_message);
-            return;
+    private boolean validUser() {
+        if(Strings.isNullOrEmpty(name.get())){
+            mSnackBarText.setValue(R.string.required_name);
+            return false;
+        }
+        if(Strings.isNullOrEmpty(phone.get())){
+            mSnackBarText.setValue(R.string.required_phone);
+            return false;
+        } else if( PhoneNumberUtils
+                .formatNumberToE164(phone.get(), Locale.getDefault()
+                        .getCountry()) == null){
+            mSnackBarText.setValue(R.string.invalid_phone);
+            return false;
+        }
+        if(Strings.isNullOrEmpty(neighborhood.get())){
+            mSnackBarText.setValue(R.string.required_neighborhood);
+            return false;
+        }
+        if(Strings.isNullOrEmpty(dateOfBirth.get())){
+            mSnackBarText.setValue(R.string.required_date);
+            return false;
+        } else if(DateConverter.convertAndValidateDateOfbirth(dateOfBirth.get()) == null){
+            mSnackBarText.setValue(R.string.invalid_date);
+            return false;
         }
 
-        mUserRepository.saveUser(user);
-        mUserUpdated.call();
+        return true;
+    }
+
+    private User mapUserFields(){
+        String formattedPhone = PhoneNumberUtils.formatNumberToE164(phone.get(), Locale.getDefault().getCountry());
+        User user = new User(
+                this.user.get() != null ? this.user.get().getId() : 0,
+                Objects.requireNonNull(name.get()), formattedPhone,
+                Objects.requireNonNull(neighborhood.get()),
+                cities.get(cityIdx.get()),
+                Objects.requireNonNull(DateConverter.convertAndValidateDateOfbirth(dateOfBirth.get())));
+        return user;
     }
 }

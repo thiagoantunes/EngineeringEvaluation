@@ -32,14 +32,13 @@ public class UserDto {
         this.mDate = mDate;
     }
 
-    public UserDto(User user, Application context) {
-        DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(context);
+    public UserDto(User user) {
         this.mId = user.getId();
         this.mName = user.getName();
         this.mPhone = PhoneNumberUtils.formatNumber(user.getPhone(), Locale.getDefault().getCountry());
         this.mNeighborhood = user.getNeighborhood();
         this.mCity = user.getCity();
-        this.mDate = dateFormat.format(user.getDateOfBirth());
+        this.mDate = DateFormat.getDateInstance().format(user.getDateOfBirth());
     }
 
     public int getId () { return mId; };

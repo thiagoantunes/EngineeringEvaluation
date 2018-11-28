@@ -10,6 +10,14 @@
     <string name="city">City:</string>
     <string name="neightborhood">Neightborhood:</string>
     <string name="date_of_birth">Date of birth:</string>
+    <string name="invalid_phone">Invalid phone</string>
+    <string name="invalid_date">Invalid date of birth</string>
+    <string name="required_name">Name is required</string>
+    <string name="required_neighborhood">Neighborhood is required</string>
+    <string name="required_phone">Phone is required</string>
+    <string name="required_date">Date of birth is required</string>
+    <string name="name">Name</string>
+    <string name="centro">Centro</string>
 
     <string-array name="cities_array">
         <item>Belo Horizonte</item>

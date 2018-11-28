@@ -94,12 +94,6 @@ public final class User {
         return mDateOfBirth;
     }
 
-    public boolean isEmpty() {
-        return Strings.isNullOrEmpty(mName) ||
-                Strings.isNullOrEmpty(mPhone) ||
-                Strings.isNullOrEmpty(mNeighborhood);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

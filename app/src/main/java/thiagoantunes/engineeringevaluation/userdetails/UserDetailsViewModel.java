@@ -31,7 +31,7 @@ public class UserDetailsViewModel extends AndroidViewModel {
     }
 
     public void setUser(User user) {
-        this.userDto.set(new UserDto(user, getApplication()));
+        this.userDto.set(new UserDto(user));
         this.user.set(user);
     }
 
