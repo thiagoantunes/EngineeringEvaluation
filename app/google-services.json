@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "226872038101",
+    "firebase_url": "https://engineeringevaluation-dec12.firebaseio.com",
+    "project_id": "engineeringevaluation-dec12",
+    "storage_bucket": "engineeringevaluation-dec12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226872038101:android:b0b0076d303e9d8e",
+        "android_client_info": {
+          "package_name": "thiagoantunes.engineeringevaluation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "226872038101-53helb4cjkn3ht412l82qda05bcthn78.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "thiagoantunes.engineeringevaluation",
+            "certificate_hash": "412663bd344b201b3d4cf409d21756b4e2f8cbae"
+          }
+        },
+        {
+          "client_id": "226872038101-pmlf9jfd3dp2el4tvf35jp47of4pe9v7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkro0RylzraYBg_NLirGJeIA4CcTY_bmE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226872038101-pmlf9jfd3dp2el4tvf35jp47of4pe9v7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

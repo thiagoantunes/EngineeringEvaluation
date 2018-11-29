@@ -20,29 +20,32 @@ public final class User {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private final int mId;
+    private int mId;
 
     @NonNull
     @ColumnInfo(name = "city")
-    private final String mCity;
+    private String mCity;
 
     @NonNull
     @ColumnInfo(name = "name")
-    private final String mName;
+    private String mName;
 
     @NonNull
     @ColumnInfo(name = "phone")
-    private final String mPhone;
+    private String mPhone;
 
     @NonNull
     @ColumnInfo(name = "neighborhood")
-    private final String mNeighborhood;
+    private String mNeighborhood;
 
     @NonNull
     @ColumnInfo(name = "date_of_birth")
     @TypeConverters({DateConverter.class})
-    private final Date mDateOfBirth;
+    private Date mDateOfBirth;
 
+    public User() {
+        //Firebase needed
+    }
 
     public User(int mId, @NonNull String mName,
                 @NonNull String mPhone, @NonNull String mNeighborhood,
@@ -92,6 +95,30 @@ public final class User {
     @NonNull
     public Date getDateOfBirth() {
         return mDateOfBirth;
+    }
+
+    public void setId(int mId) {
+        this.mId = mId;
+    }
+
+    public void setCity(@NonNull String mCity) {
+        this.mCity = mCity;
+    }
+
+    public void setName(@NonNull String mName) {
+        this.mName = mName;
+    }
+
+    public void setPhone(@NonNull String mPhone) {
+        this.mPhone = mPhone;
+    }
+
+    public void setNeighborhood(@NonNull String mNeighborhood) {
+        this.mNeighborhood = mNeighborhood;
+    }
+
+    public void setDateOfBirth(@NonNull Date mDateOfBirth) {
+        this.mDateOfBirth = mDateOfBirth;
     }
 
     @Override

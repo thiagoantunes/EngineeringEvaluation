@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
+import thiagoantunes.engineeringevaluation.data.source.remote.FirebaseUserService;
 import thiagoantunes.engineeringevaluation.util.AppExecutors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -38,13 +39,13 @@ public class UserRepository  implements UserDataSource {
 
     @Override
     public LiveData<List<User>> getUsers() {
-        return mDatabase.userDao().loadAllUsers();
+        return new FirebaseUserService().getUsers();
+        //return mDatabase.userDao().loadAllUsers();
     }
 
     @Override
     public LiveData<User> getUser(int userId) {
         return mDatabase.userDao().getUserById(userId);
-
     }
 
     @Override
