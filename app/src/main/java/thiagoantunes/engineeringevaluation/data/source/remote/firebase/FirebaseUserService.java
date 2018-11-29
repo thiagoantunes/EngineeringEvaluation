@@ -8,8 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 import thiagoantunes.engineeringevaluation.data.User;
+import thiagoantunes.engineeringevaluation.data.source.UserDataSource;
 
-public class FirebaseUserService {
+public class FirebaseUserService implements UserDataSource {
 
     private static volatile FirebaseUserService INSTANCE;
 
@@ -32,19 +33,27 @@ public class FirebaseUserService {
         return INSTANCE;
     }
 
+    @Override
     public LiveData<List<User>> getUsers() {
         return Transformations.map(new FirebaseQueryLiveData(USERS_REF),
                 new FirebaseDeserializers.UserListDeserializer());
     }
 
+    @Override
     public LiveData<User> getUser(String userId) {
         return Transformations.map(new FirebaseQueryLiveData(USERS_REF.child(userId))
                 , new FirebaseDeserializers.UserDeserializer());
 
     }
 
+    @Override
     public void saveUser(@NonNull User user) {
         USERS_REF.child(user.getKey()).setValue(user);
+    }
+
+    @Override
+    public LiveData<List<User>> searchUsers(@NonNull String query) {
+        return null;
     }
 
 }
