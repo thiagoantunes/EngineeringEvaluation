@@ -19,7 +19,7 @@ public class UserAddEditActivity extends AppCompatActivity implements UserAddEdi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int userId = getIntent().getIntExtra(EXTRA_EDIT_USER_ID, 0);
+        String userId = getIntent().getStringExtra(EXTRA_EDIT_USER_ID);
 
         setContentView(R.layout.user_add_edit_activity);
         if (savedInstanceState == null) {

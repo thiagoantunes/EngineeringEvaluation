@@ -1,6 +1,9 @@
 package thiagoantunes.engineeringevaluation.userdetails;
 
 import android.app.Application;
+
+import com.google.common.base.Strings;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
@@ -34,8 +37,8 @@ public class UserDetailsViewModel extends AndroidViewModel {
         this.user.set(user);
     }
 
-    public void start(int userId) {
-        if (userId != 0) {
+    public void start(String userId) {
+        if (!Strings.isNullOrEmpty(userId)) {
             mObservableUser = mUserRepository.getUser(userId);
         }
     }

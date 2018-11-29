@@ -13,6 +13,8 @@ public class UserDto {
 
     private int mId;
 
+    private String mKey;
+
     private String mName;
 
     private String mPhone;
@@ -23,8 +25,9 @@ public class UserDto {
 
     private String mDate;
 
-    public UserDto(int mId, String mName,  String mPhone, String mNeighborhood, String mCity, String mDate) {
+    public UserDto(int mId, String mKey, String mName,  String mPhone, String mNeighborhood, String mCity, String mDate) {
         this.mId = mId;
+        this.mKey = mKey;
         this.mName = mName;
         this.mPhone = mPhone;
         this.mNeighborhood = mNeighborhood;
@@ -34,6 +37,7 @@ public class UserDto {
 
     public UserDto(User user) {
         this.mId = user.getId();
+        this.mKey = user.getKey();
         this.mName = user.getName();
         this.mPhone = PhoneNumberUtils.formatNumber(user.getPhone(), Locale.getDefault().getCountry());
         this.mNeighborhood = user.getNeighborhood();
@@ -42,6 +46,10 @@ public class UserDto {
     }
 
     public int getId () { return mId; };
+
+    public String getKey() {
+        return mName;
+    }
 
     public String getName() {
         return mName;

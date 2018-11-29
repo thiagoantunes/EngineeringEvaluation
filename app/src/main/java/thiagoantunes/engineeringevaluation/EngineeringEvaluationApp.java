@@ -2,8 +2,11 @@ package thiagoantunes.engineeringevaluation;
 
 import android.app.Application;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import thiagoantunes.engineeringevaluation.data.source.UserRepository;
 import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
+import thiagoantunes.engineeringevaluation.data.source.remote.firebase.FirebaseUserService;
 import thiagoantunes.engineeringevaluation.util.AppExecutors;
 
 /**
@@ -16,7 +19,7 @@ public class EngineeringEvaluationApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mAppExecutors = new AppExecutors();
     }
 
@@ -24,7 +27,11 @@ public class EngineeringEvaluationApp extends Application {
         return AppDatabase.getInstance(this, mAppExecutors);
     }
 
+    public FirebaseUserService getFirebase() {
+        return FirebaseUserService.getInstance();
+    }
+
     public UserRepository getRepository() {
-        return UserRepository.getInstance(getDatabase(), mAppExecutors);
+        return UserRepository.getInstance(getFirebase(), getDatabase(), mAppExecutors);
     }
 }

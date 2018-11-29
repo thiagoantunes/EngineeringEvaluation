@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import androidx.room.Room;
 import androidx.test.InstrumentationRegistry;
@@ -32,10 +33,10 @@ import static org.junit.Assert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class UserDaoTest {
 
-    private static final User USER_ENTITY = new User(0, "João Silva", "3134333333",
+    private static final User USER_ENTITY = new User(0,UUID.randomUUID().toString(), "João Silva", "3134333333",
             "Centro", "Belo Horizonte", new Date());
 
-    private static final User USER_ENTITY2 = new User(0, "Maria Silva", "31945443322",
+    private static final User USER_ENTITY2 = new User(0,UUID.randomUUID().toString(), "Maria Silva", "31945443322",
             "Savassi", "Contagem", new Date() );
 
     private static final List<User> USERS;
@@ -98,7 +99,7 @@ public class UserDaoTest {
         int userID = (int )mUserDao.saveUser(USER_ENTITY);
 
         // When an user with the same id is inserted
-        User newUser= new User(userID,"Teste", "313141412", "Bairro Teste", "Belo Horizonte", new Date());
+        User newUser= new User(userID,UUID.randomUUID().toString(),"Teste", "313141412", "Bairro Teste", "Belo Horizonte", new Date());
         mUserDao.saveUser(newUser);
         // When getting the user by id from the database
         User loaded = LiveDataTestUtil.getValue(mUserDao.getUserById(userID));

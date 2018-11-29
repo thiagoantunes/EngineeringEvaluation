@@ -8,7 +8,6 @@ import androidx.room.TypeConverters;
 import androidx.annotation.NonNull;
 
 import com.google.common.base.Objects;
-import com.google.common.base.Strings;
 
 import java.util.Date;
 
@@ -21,6 +20,9 @@ public final class User {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int mId;
+
+    @ColumnInfo(name = "userkey")
+    private String mKey;
 
     @NonNull
     @ColumnInfo(name = "city")
@@ -47,10 +49,11 @@ public final class User {
         //Firebase needed
     }
 
-    public User(int mId, @NonNull String mName,
+    public User(int mId,@NonNull String mKey, @NonNull String mName,
                 @NonNull String mPhone, @NonNull String mNeighborhood,
                 @NonNull String mCity, @NonNull Date mDateOfBirth) {
         this.mId = mId;
+        this.mKey = mKey;
         this.mName = mName;
         this.mPhone = mPhone;
         this.mNeighborhood = mNeighborhood;
@@ -61,6 +64,7 @@ public final class User {
     @Ignore
     public User(User user) {
         this.mId = user.getId();
+        this.mKey = user.getKey();
         this.mName = user.getName();
         this.mPhone = user.getPhone();
         this.mNeighborhood = user.getNeighborhood();
@@ -70,6 +74,11 @@ public final class User {
 
     public int getId() {
         return mId;
+    }
+
+    @NonNull
+    public String getKey() {
+        return mKey;
     }
 
     @NonNull
@@ -101,6 +110,10 @@ public final class User {
         this.mId = mId;
     }
 
+    public void setKey(String mKey) {
+        this.mKey = mKey;
+    }
+
     public void setCity(@NonNull String mCity) {
         this.mCity = mCity;
     }
@@ -127,6 +140,7 @@ public final class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equal(mId, user.mId) &&
+                Objects.equal(mKey, user.mKey) &&
                 Objects.equal(mName, user.mName) &&
                 Objects.equal(mPhone, user.mPhone) &&
                 Objects.equal(mNeighborhood, user.mNeighborhood) &&

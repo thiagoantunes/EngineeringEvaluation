@@ -3,6 +3,7 @@ package thiagoantunes.engineeringevaluation.userlist;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.FirebaseDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,9 +44,9 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     /** Shows the user detail fragment */
-    public void showUserDetails(int userId) {
+    public void showUserDetails(String userId) {
         Bundle bundle = new Bundle();
-        bundle.putInt("USER_ID",userId);
+        bundle.putString("USER_ID",userId);
         UserDetailsDialog dialog = new UserDetailsDialog();
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager() , "Edit User");

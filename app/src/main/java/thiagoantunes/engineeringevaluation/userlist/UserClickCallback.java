@@ -1,5 +1,5 @@
 package thiagoantunes.engineeringevaluation.userlist;
 
 public interface UserClickCallback {
-    void onClick(int userId);
+    void onClick(String userId);
 }

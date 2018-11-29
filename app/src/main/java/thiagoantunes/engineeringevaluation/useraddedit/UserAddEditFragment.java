@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.common.base.Strings;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -42,7 +43,7 @@ public class UserAddEditFragment extends Fragment {
 
     private UserAddEditFragmentBinding mViewDataBinding;
 
-    static UserAddEditFragment newInstance(int userId) { return forUser(userId); }
+    static UserAddEditFragment newInstance(String userId) { return forUser(userId); }
 
     @Nullable
     @Override
@@ -55,7 +56,7 @@ public class UserAddEditFragment extends Fragment {
 
         mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(UserAddEditViewModel.class);
         assert getArguments() != null;
-        mViewModel.start(getArguments().getInt(KEY_EDIT_USER_ID));
+        mViewModel.start(getArguments().getString(KEY_EDIT_USER_ID));
 
         Resources res = getResources();
         mViewModel.SetCities(Arrays.asList(res.getStringArray(R.array.cities_array)));
@@ -83,7 +84,7 @@ public class UserAddEditFragment extends Fragment {
     private void subscribeToModel() {
         // Observe user data
         assert getArguments() != null;
-        if(getArguments().getInt(KEY_EDIT_USER_ID) > 0){
+        if(!Strings.isNullOrEmpty(getArguments().getString(KEY_EDIT_USER_ID))){
             mViewModel.getObservableUser().observe(this, user -> mViewModel.setUser(user));
         }
     }
@@ -139,10 +140,10 @@ public class UserAddEditFragment extends Fragment {
     }
 
     /** Creates product fragment for specific product ID */
-    private static UserAddEditFragment forUser(int userId) {
+    private static UserAddEditFragment forUser(String userId) {
         UserAddEditFragment fragment = new UserAddEditFragment();
         Bundle args = new Bundle();
-        args.putInt(KEY_EDIT_USER_ID, userId);
+        args.putString(KEY_EDIT_USER_ID, userId);
         fragment.setArguments(args);
         return fragment;
     }

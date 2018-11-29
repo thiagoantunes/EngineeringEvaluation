@@ -23,12 +23,12 @@ public class UserDetailsDialog extends AppCompatDialogFragment {
 
     private UserDetailsViewModel mViewModel;
 
-    private int mUserId;
+    private String mUserId;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        mUserId = bundle.getInt(KEY_USER_ID,0);
+        mUserId = bundle.getString(KEY_USER_ID);
 
         mViewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(UserDetailsViewModel.class);
         assert getArguments() != null;
@@ -47,7 +47,7 @@ public class UserDetailsDialog extends AppCompatDialogFragment {
 
             Intent intent = new Intent(getActivity(), UserAddEditActivity.class);
             assert getArguments() != null;
-            intent.putExtra(UserAddEditActivity.EXTRA_EDIT_USER_ID, getArguments().getInt(KEY_USER_ID));
+            intent.putExtra(UserAddEditActivity.EXTRA_EDIT_USER_ID, getArguments().getString(KEY_USER_ID));
             startActivityForResult(intent, REQUEST_EDIT_USER);
         });
 

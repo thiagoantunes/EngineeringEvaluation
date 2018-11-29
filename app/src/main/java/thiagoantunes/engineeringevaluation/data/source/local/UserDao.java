@@ -21,6 +21,9 @@ public interface UserDao {
     @Query("SELECT * FROM users WHERE id = :userId")
     LiveData<User> getUserById(int userId);
 
+    @Query("SELECT * FROM users WHERE userkey = :userKey")
+    LiveData<User> getUserByKey(String userKey);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long saveUser(User user);
 

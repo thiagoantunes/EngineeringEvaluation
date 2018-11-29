@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
@@ -48,8 +49,8 @@ public class UserAddEditViewModel extends AndroidViewModel {
         mUserRepository = ((EngineeringEvaluationApp) context).getRepository();
     }
 
-    public void start(int userId) {
-        if (userId != 0) {
+    public void start(String userId) {
+        if (!Strings.isNullOrEmpty(userId)) {
             mObservableUser = mUserRepository.getUser(userId);
         }
     }
@@ -120,6 +121,7 @@ public class UserAddEditViewModel extends AndroidViewModel {
         String formattedPhone = PhoneNumberUtils.formatNumberToE164(phone.get(), Locale.getDefault().getCountry());
         User user = new User(
                 this.user.get() != null ? this.user.get().getId() : 0,
+                this.user.get() != null ? this.user.get().getKey() : UUID.randomUUID().toString(),
                 Objects.requireNonNull(name.get()), formattedPhone,
                 Objects.requireNonNull(neighborhood.get()),
                 cities.get(cityIdx.get()),

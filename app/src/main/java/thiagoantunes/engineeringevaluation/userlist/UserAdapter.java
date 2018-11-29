@@ -82,7 +82,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = mUserList.get(position);
-        holder.binding.setId(user.getId());
+        holder.binding.setId(user.getKey());
         holder.binding.setName(user.getName());
         holder.binding.setPhone(PhoneNumberUtils.formatNumber(user.getPhone(), Locale.getDefault().getCountry()));
         holder.binding.executePendingBindings();

@@ -11,7 +11,7 @@ public interface UserDataSource {
 
     LiveData<List<User>> getUsers();
 
-    LiveData<User> getUser(int userId);
+    LiveData<User> getUser(String userKey);
 
     void saveUser(@NonNull User user);
 
