@@ -5,6 +5,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.source.local.AppDatabase;
 import thiagoantunes.engineeringevaluation.data.source.remote.firebase.FirebaseUserService;
@@ -42,29 +43,30 @@ public class UserRepository  implements UserDataSource {
 
     @Override
     public LiveData<List<User>> getUsers() {
-        return mFirebase.getUsers();
-        //return mDatabase.userDao().loadAllUsers();
+        //return mFirebase.getUsers();
+        return mDatabase.userDao().loadAllUsers();
     }
 
     @Override
     public LiveData<User> getUser(String userId) {
-        return mFirebase.getUser(userId);
-        //return mDatabase.userDao().getUserByKey(userId);
+        //return mFirebase.getUser(userId);
+        return mDatabase.userDao().getUserByKey(userId);
     }
 
     @Override
     public void saveUser(@NonNull User user) {
         checkNotNull(user);
-        //Runnable saveRunnable = () -> mDatabase.userDao().saveUser(user);
-        //mAppExecutors.diskIO().execute(saveRunnable);
-        Runnable saveRunnable = () -> mFirebase.saveUser(user);
-        mAppExecutors.networkIO().execute(saveRunnable);
+        Runnable saveRunnable = () -> mDatabase.userDao().saveUser(user);
+        mAppExecutors.diskIO().execute(saveRunnable);
+        //Runnable saveRunnable = () -> mFirebase.saveUser(user);
+        //mAppExecutors.networkIO().execute(saveRunnable);
 
     }
 
     @Override
     public LiveData<List<User>> searchUsers(@NonNull String query) {
-        return mDatabase.userDao().searchAllUsers(query);
+        //return mFirebase.searchUsers(query);
+        return mDatabase.userDao().searchAllUsers("*" + query + "*");
     }
 
     @VisibleForTesting

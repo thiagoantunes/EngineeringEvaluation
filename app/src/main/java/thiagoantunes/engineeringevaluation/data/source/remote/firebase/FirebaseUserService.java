@@ -1,12 +1,11 @@
 package thiagoantunes.engineeringevaluation.data.source.remote.firebase;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
+import androidx.lifecycle.MediatorLiveData;
 import thiagoantunes.engineeringevaluation.data.User;
 import thiagoantunes.engineeringevaluation.data.source.UserDataSource;
 
@@ -17,9 +16,14 @@ public class FirebaseUserService implements UserDataSource {
     private static final DatabaseReference USERS_REF =
             FirebaseDatabase.getInstance().getReference("/users");
 
+    private final MediatorLiveData<List<User>> mObservableUsers;
+
+    private final MediatorLiveData<User> mObservableUser;
+
     // Prevent direct instantiation.
     private FirebaseUserService() {
-
+        mObservableUsers = new MediatorLiveData<>();
+        mObservableUser = new MediatorLiveData<>();
     }
 
     public static FirebaseUserService getInstance() {
@@ -35,14 +39,19 @@ public class FirebaseUserService implements UserDataSource {
 
     @Override
     public LiveData<List<User>> getUsers() {
-        return Transformations.map(new FirebaseQueryLiveData(USERS_REF),
-                new FirebaseDeserializers.UserListDeserializer());
+        // Set up the MediatorLiveData to convert DataSnapshot objects into HotStock objects
+        mObservableUsers.addSource(
+                new FirebaseQueryLiveData(USERS_REF),
+                dataSnapshot -> FirebaseDeserializers.UserListDeserializer(mObservableUsers, dataSnapshot, null));
+        return mObservableUsers;
     }
 
     @Override
     public LiveData<User> getUser(String userId) {
-        return Transformations.map(new FirebaseQueryLiveData(USERS_REF.child(userId))
-                , new FirebaseDeserializers.UserDeserializer());
+        mObservableUser.addSource(
+                new FirebaseQueryLiveData(USERS_REF.child(userId)),
+                dataSnapshot -> FirebaseDeserializers.UserDeserializer(mObservableUser, dataSnapshot));
+        return mObservableUser;
 
     }
 
@@ -52,8 +61,11 @@ public class FirebaseUserService implements UserDataSource {
     }
 
     @Override
-    public LiveData<List<User>> searchUsers(@NonNull String query) {
-        return null;
+    public LiveData<List<User>> searchUsers(@NonNull String ftsQuery) {
+        mObservableUsers.addSource(
+                new FirebaseQueryLiveData(USERS_REF),
+                dataSnapshot -> FirebaseDeserializers.UserListDeserializer(mObservableUsers, dataSnapshot, ftsQuery));
+        return mObservableUsers;
     }
 
 }

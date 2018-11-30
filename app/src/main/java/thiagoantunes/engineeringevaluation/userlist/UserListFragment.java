@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 
+import com.google.common.base.Strings;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -94,13 +96,8 @@ public class UserListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                if (query == null || query.isEmpty()) {
-                    subscribeToModel(mViewModel.getUsers());
-                    mIsFiltering = false;
-                } else {
-                    mIsFiltering = true;
-                    subscribeToModel(mViewModel.searchUsers("*" + query + "*"));
-                }
+                mViewModel.searchUsers(query);
+                mIsFiltering = !Strings.isNullOrEmpty(query);
                 return false;
             }
         });
